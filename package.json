@@ -1,0 +1,49 @@
+{
+  "name": "projet-o-gm-back",
+  "version": "0.0.1",
+  "description": "API de gestion de la data d'un site de création et de consultation de jeux de rôles open source",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=production node .",
+    "dev": "npx nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-Clock-Watt/projet-o-gm-back.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "NodeJS",
+    "ExpressJS",
+    "Sqitch",
+    "Postgresql",
+    "dotenv",
+    "Winston",
+    "Swagger",
+    "Joi"
+  ],
+  "author": "Kevin Bournique, Alexis Delahaye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-Clock-Watt/projet-o-gm-back/issues"
+  },
+  "homepage": "https://github.com/O-Clock-Watt/projet-o-gm-back#readme",
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-jsdoc-swagger": "^1.8.0",
+    "joi": "^17.9.2",
+    "pg": "^8.11.3",
+    "winston": "^3.10.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  }
+}
