@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "API de gestion de la data d'un site de création et de consultation de jeux de rôles open source",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node .",
+    "dev": "npx nodemon"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "debug": "^4.3.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-jsdoc-swagger": "^1.8.0",
