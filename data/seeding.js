@@ -1,7 +1,6 @@
 import { fakerFR as faker } from '@faker-js/faker';
 import '../app/helpers/env.load.js';
 import pg from 'pg';
-import logger from '../app/helpers/logger.js';
 
 /* How many should we generate ? */
 
@@ -13,41 +12,24 @@ const howMany = {
   stat: 0,
   scenario: 11,
   category: 11,
-  user: 0,
+  user: 10,
   role: 3,
 
   assetHasStat: 0,
-  review: 0,
-  bookmark: 0,
-  write: 0,
+  review: 30,
+  bookmark: 30,
 };
 
+howMany.assetHasStat = howMany.stat;
 howMany.stat = (
   howMany.hero
   + howMany.npc
   + howMany.item
 );
 
-/* Initialize objects of values */
-
-const heros = [];
-const npcs = [];
-const items = [];
-const stats = [];
-const ressources = [];
-const scenarios = [];
-const categories = [];
-const users = [];
-const roles = [];
-
-const assetsHaveStats = [];
-const reviews = [];
-const bookmarks = [];
-const writes = [];
-
 /* GENERATE FAKE DATA */
 
-/* ASSETS : HERO, NPC, ITEM */
+/* -- ASSETS : HERO, NPC, ITEM */
 
 function createRandomHero() {
   const name = faker.helpers.arrayElement([
@@ -64,7 +46,7 @@ function createRandomHero() {
   ]);
   const description = faker.lorem.paragraph();
   const imageUrl = faker.image.avatar();
-  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
   const characterClass = faker.helpers.arrayElement(['Barbare', 'Guerrier', 'Mage', 'Paladin', 'Voleur', 'Autre']);
   const lineage = faker.helpers.arrayElement(['Vampire', 'Loup-Garou', 'Zombie', 'Humain', 'Autre']);
 
@@ -74,17 +56,15 @@ function createRandomHero() {
     image_url: imageUrl,
     class: characterClass,
     lineage,
-    code_scenario: codeScenario,
+    scenario_id: scenarioId,
   };
 }
-
-console.log(createRandomHero());
 
 function createRandomNPC() {
   const name = faker.helpers.arrayElement(['Zombie', 'Loup', 'Alien', 'Dragon', 'Vagabond', 'Vampire', 'Orc', 'Pillard', 'Pirate']);
   const description = faker.lorem.paragraph();
   const imageUrl = faker.image.avatar();
-  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
   const isHostile = faker.helpers.arrayElement([true, false]);
 
   return {
@@ -92,11 +72,9 @@ function createRandomNPC() {
     description,
     image_url: imageUrl,
     is_hostile: isHostile,
-    code_scenario: codeScenario,
+    scenario_id: scenarioId,
   };
 }
-
-console.log(createRandomNPC());
 
 function createRandomItem() {
   const name = faker.helpers.arrayElement([
@@ -113,7 +91,7 @@ function createRandomItem() {
   ]);
   const type = faker.helpers.arrayElement(['Arme', 'Armure', 'Bijoux', 'Potion', 'Objets magiques', 'Autre']);
   const description = faker.lorem.paragraph();
-  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
   const imageUrl = faker.image.avatar();
 
   return {
@@ -121,33 +99,82 @@ function createRandomItem() {
     type,
     description,
     imageUrl,
-    code_scenario: codeScenario,
+    scenario_id: scenarioId,
   };
 }
 
-/* STAT, ASSET_HAS_STAT */
+/* -- STAT, ASSET_HAS_STAT */
 
 function createRandomStat() {
   const name = faker.helpers.arrayElement(['Force', 'Endurance', 'Intelligence', 'Dexterite', 'Sagesse', 'Charisme', 'Perception', 'Vigueur', 'Agilité', 'Vitesse', 'Autre']);
   const description = faker.lorem.paragraph();
-  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
 
   return {
     name,
     description,
-    code_scenario: codeScenario,
+    scenario_id: scenarioId,
   };
 }
 
 function createRandomAssetHasStat() {
   const statId = faker.number.int({ min: 1, max: howMany.stat });
+  const assetId = faker.number.int({ min: 1, max: howMany.hero + howMany.npc + howMany.item });
+  const level = faker.number.int({ min: 1, max: 3 });
 
   return {
     stat_id: statId,
+    asset_id: assetId,
+    level,
   };
 }
 
-console.log(createRandomAssetHasStat());
+/* -- RESSOURCE, CATEGORY & SCENARIO */
+
+function createRandomRessource() {
+  const type = faker.helpers.arrayElement(['Son', 'Image', 'Vidéo', 'Règles', 'Map', 'Illustration', 'Autre']);
+  const name = faker.helpers.arrayElement(['Carte du maraudeur', 'Livre de règle', 'Ecran du MJ', 'Son des grottes', 'Image de la ville', 'Vidéo de présentation', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const url = faker.internet.url();
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
+
+  return {
+    type,
+    name,
+    description,
+    url,
+    scenario_id: scenarioId,
+  };
+}
+
+function createRandomScenario() {
+  const categoryId = faker.number.int({ min: 1, max: 11 });
+  const authorId = faker.number.int({ min: 1, max: 11 });
+  const name = faker.helpers.arrayElement(['Le donjon de Naheulbeuk', 'L\'appel de Cthulhu', 'D&D', 'L\'oeil noir', 'Shadowrun', 'Vampire', 'Warhammer', 'Star Wars', 'Loup-Garou', 'Polaris', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const age = faker.helpers.arrayElement(['Tout public', '16+', '18+']);
+  const duration = faker.helpers.arrayElement(['1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h']);
+  const nbPlayer = faker.helpers.arrayElement(['2', '3', '4', '5', '6', '7', '8', '9', '10']);
+  const isVerified = faker.helpers.arrayElement([true, false]);
+
+  return {
+    category_id: categoryId,
+    author_id: authorId,
+    name,
+    description,
+    age,
+    duration,
+    nbPlayer,
+    isVerified,
+  };
+}
+
+function createRandomCategory() {
+  const name = faker.helpers.arrayElement(['Médiéval', 'Post-Apocalyptique', 'Sci-Fi', 'Horreur', 'Fantastique', 'Historique', 'Contemporain', 'Western', 'Cyberpunk', 'Super-héros', 'Autre']);
+  return { name };
+}
+
+/* -- USER & ROLE */
 
 function createRandomUser() {
   const firstName = faker.person.firstName();
@@ -164,7 +191,6 @@ function createRandomUser() {
     role_id: roleId,
   };
 }
-console.log(createRandomUser());
 
 function createRandomRole() {
   /**
@@ -200,104 +226,119 @@ function createRandomRole() {
   };
 }
 
-function createRandomCategory() {
-  const name = faker.helpers.arrayElement(['Médiéval', 'Post-Apocalyptique', 'Sci-Fi', 'Horreur', 'Fantastique', 'Historique', 'Contemporain', 'Western', 'Cyberpunk', 'Super-héros', 'Autre']);
-  return { name };
-}
+/* -- REVIEW & USER_SCENARIO_BOOKMARK */
 
-function createRandomScenario() {
-  const categoryId = faker.number.int({ min: 1, max: 11 });
-  const authorId = faker.number.int({ min: 1, max: 11 });
-  const name = faker.helpers.arrayElement(['Le donjon de Naheulbeuk', 'L\'appel de Cthulhu', 'D&D', 'L\'oeil noir', 'Shadowrun', 'Vampire', 'Warhammer', 'Star Wars', 'Loup-Garou', 'Polaris', 'Autre']);
-  const description = faker.lorem.paragraph();
-  const age = faker.helpers.arrayElement(['Tout public', '16+', '18+']);
-  const duration = faker.helpers.arrayElement(['1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h']);
-  const nbPlayer = faker.helpers.arrayElement(['2', '3', '4', '5', '6', '7', '8', '9', '10']);
-  const isVerified = faker.helpers.arrayElement([true, false]);
+function createRandomReview() {
+  const userId = faker.number.int({ min: 1, max: howMany.user });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
+  const rate = faker.number.int({ min: 1, max: 5 });
+  const opinion = faker.lorem.paragraph();
 
   return {
-    categoryId,
-    authorId,
-    name,
-    description,
-    age,
-    duration,
-    nbPlayer,
-    isVerified,
+    user_id: userId,
+    scenario_id: scenarioId,
+    rate,
+    opinion,
   };
 }
 
-function createRandomRessource() {
-  // const type =
-  const name = faker.helpers.arrayElement(['Outil', 'Matériel', 'Inventaire', 'Autre']);
-  const description = faker.lorem.paragraph();
-  const url = faker.internet.url();
+function createRandomBookmark() {
+  const userId = faker.number.int({ min: 1, max: howMany.user });
+  const scenarioId = faker.number.int({ min: 1, max: howMany.scenario });
 
   return {
-    name,
-    description,
-    url,
+    user_id: userId,
+    scenario_id: scenarioId,
   };
 }
 
-// Génération :
+/* Génération */
 
-// Générer 10 items
-for (let i = 0; i < 10; i++) {
-  items.push(createRandomItem());
-}
+/* -- Initialize objects of values */
 
-// Générer 10 Héros
-for (let i = 0; i < 10; i++) {
+const heros = [];
+const npcs = [];
+const items = [];
+const stats = [];
+const ressources = [];
+const scenarios = [];
+const categories = [];
+const users = [];
+const roles = [];
+
+const assetsHaveStats = [];
+const reviews = [];
+const bookmarks = [];
+
+/* -- Generate & push data */
+
+// heros
+for (let i = 0; i < howMany.hero; i++) {
   heros.push(createRandomHero());
 }
 
-// Générer 10 npcs
+// npcs
 for (let i = 0; i < 10; i++) {
   npcs.push(createRandomNPC());
 }
 
-// Générer 10 ressources
-for (let i = 0; i < 10; i++) {
-  ressources.push(createRandomRessource());
+// items
+for (let i = 0; i < howMany.item; i++) {
+  items.push(createRandomItem());
 }
 
-// Générer 10 stats
-for (let i = 0; i < 10; i++) {
+// stats
+for (let i = 0; i < howMany.stat; i++) {
   stats.push(createRandomStat());
 }
 
-// Générer 10 assets
-for (let i = 0; i < 10; i++) {
-  assetsHaveStats.push(createRandomAssetHasStat());
+// ressources
+for (let i = 0; i < howMany.ressource; i++) {
+  ressources.push(createRandomRessource());
 }
 
-// Générer 10 users
-for (let i = 0; i < 10; i++) {
-  users.push(createRandomUser());
-}
-
-// Générer 10 roles
-for (let i = 0; i < 10; i++) {
-  roles.push(createRandomRole());
-}
-
-// Générer 10 categories
-for (let i = 0; i < 10; i++) {
-  categories.push(createRandomCategory());
-}
-
-// Générer 10 scenarios
-for (let i = 0; i < 10; i++) {
+// scenarios
+for (let i = 0; i < howMany.scenario; i++) {
   scenarios.push(createRandomScenario());
 }
 
-// Connexion au client
+// categories
+for (let i = 0; i < howMany.category; i++) {
+  categories.push(createRandomCategory());
+}
+
+// users
+for (let i = 0; i < howMany.user; i++) {
+  users.push(createRandomUser());
+}
+
+// roles
+for (let i = 0; i < howMany.role; i++) {
+  roles.push(createRandomRole());
+}
+
+// assets_have_stats
+for (let i = 0; i < howMany.assetHasStat; i++) {
+  assetsHaveStats.push(createRandomAssetHasStat());
+}
+
+// reviews
+for (let i = 0; i < howMany.review; i++) {
+  reviews.push(createRandomReview());
+}
+
+// bookmarks
+for (let i = 0; i < howMany.bookmark; i++) {
+  bookmarks.push(createRandomBookmark());
+}
+
+/* Connexion au client */
+
 const { Client } = pg;
 const client = new Client();
 await client.connect();
 
-await client.query('TRUNCATE TABLE "role", "user","scenario", "category", "stat", "assets", "ressource", "item" RESTART IDENTITY');
+await client.query('TRUNCATE TABLE "role", "user", "asset", "scenario", "category", "stat", "ressource", "item", "npc", "hero", "scenario", "asset_has_stat", "review", "bookmark" RESTART IDENTITY');
 
 const userQueries = [];
 const roleQueries = [];
@@ -331,6 +372,8 @@ users.forEach((user) => {
 
   userQueries.push(query);
 });
+
+console.log(userQueries);
 
 const result = await Promise.all(userQueries);
 console.log(result);
