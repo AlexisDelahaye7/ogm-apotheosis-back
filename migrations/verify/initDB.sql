@@ -13,7 +13,7 @@ SELECT "id", "name", "description", "scenario_id", "image_url" FROM "asset" WHER
 SELECT "id", "name", "description", "type" FROM "stat" WHERE false;
 SELECT "id", "stat_id", "asset_id", "level" FROM "asset_has_stat" WHERE false;
 SELECT "id", "name", "description", "scenario_id", "image_url" "class", "lineage" FROM "hero" WHERE false;
-SELECT "id", "name", "description", "scenario_id", "image_url", "is_hostile" FROM "pnj" WHERE false;
+SELECT "id", "name", "description", "scenario_id", "image_url", "is_hostile" FROM "npc" WHERE false;
 SELECT "id", "name", "description", "scenario_id", "image_url", "type" FROM "item" WHERE false;
 
 ROLLBACK;

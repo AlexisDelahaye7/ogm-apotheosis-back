@@ -101,7 +101,7 @@ CREATE TABLE "hero" (
   "lineage" TEXT NOT NULL
 ) INHERITS ("asset");
 
-CREATE TABLE "pnj" (
+CREATE TABLE "npc" (
   "is_hostile" BOOLEAN NOT NULL
 ) INHERITS ("asset");
 

@@ -3,13 +3,157 @@ import '../app/helpers/env.load.js';
 import pg from 'pg';
 import logger from '../app/helpers/logger.js';
 
+/* How many should we generate ? */
+
+const howMany = {
+  hero: 20,
+  npc: 20,
+  item: 20,
+  ressource: 0,
+  stat: 0,
+  scenario: 11,
+  category: 11,
+  user: 0,
+  role: 3,
+
+  assetHasStat: 0,
+  review: 0,
+  bookmark: 0,
+  write: 0,
+};
+
+howMany.stat = (
+  howMany.hero
+  + howMany.npc
+  + howMany.item
+);
+
+/* Initialize objects of values */
+
+const heros = [];
+const npcs = [];
+const items = [];
+const stats = [];
+const ressources = [];
+const scenarios = [];
+const categories = [];
+const user = [];
+const role = [];
+
+const assetsHaveStats = [];
+const reviews = [];
+const bookmarks = [];
+const writes = [];
+
+/* GENERATE FAKE DATA */
+
+/* ASSETS : HERO, NPC, ITEM */
+
+function createRandomHero() {
+  const name = faker.helpers.arrayElement([
+    'Aranthir the Valiant',
+    'Eowyn Lightbearer',
+    'Lorindel the Brave',
+    'Elara Stormblade',
+    'Galen Swiftwind',
+    'Isolde Silverheart',
+    'Thalion the Fearless',
+    'Lyanna Firestride',
+    'Rowan Starshield',
+    'Sylas Moonshadow',
+  ]);
+  const description = faker.lorem.paragraph();
+  const imageUrl = faker.image.avatar();
+  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const characterClass = faker.helpers.arrayElement(['Barbare', 'Guerrier', 'Mage', 'Paladin', 'Voleur', 'Autre']);
+  const lineage = faker.helpers.arrayElement(['Vampire', 'Loup-Garou', 'Zombie', 'Humain', 'Autre']);
+
+  return {
+    name,
+    description,
+    image_url: imageUrl,
+    class: characterClass,
+    lineage,
+    code_scenario: codeScenario,
+  };
+}
+
+function createRandomNPC() {
+  const name = faker.helpers.arrayElement(['Zombie', 'Loup', 'Alien', 'Dragon', 'Vagabond', 'Vampire', 'Orc', 'Pillard', 'Pirate']);
+  const description = faker.lorem.paragraph();
+  const imageUrl = faker.image.avatar();
+  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const isHostile = faker.helpers.arrayElement([true, false]);
+
+  return {
+    name,
+    description,
+    image_url: imageUrl,
+    is_hostile: isHostile,
+    code_scenario: codeScenario,
+  };
+}
+
+console.log(createRandomNPC());
+
+function createRandomItem() {
+  const name = faker.helpers.arrayElement([
+    'Excalibur',
+    'Elixir of the Ancients',
+    'Amulet of Winds',
+    'Dragonfire Dagger',
+    'Phoenix Feather Wand',
+    'Shield of Valor',
+    'Scepter of Enchantment',
+    'Helm of the Guardian',
+    'Orb of Divination',
+    'Sword of Destiny',
+  ]);
+  const type = faker.helpers.arrayElement(['Arme', 'Armure', 'Bijoux', 'Potion', 'Objets magiques', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+  const imageUrl = faker.image.avatar();
+
+  return {
+    name,
+    type,
+    description,
+    imageUrl,
+    code_scenario: codeScenario,
+  };
+}
+
+/* STAT, ASSET_HAS_STAT */
+
+function createRandomStat() {
+  const name = faker.helpers.arrayElement(['Force', 'Endurance', 'Intelligence', 'Dexterite', 'Sagesse', 'Charisme', 'Perception', 'Vigueur', 'Agilité', 'Vitesse', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const codeScenario = faker.number.int({ min: 1, max: howMany.scenario });
+
+  return {
+    name,
+    description,
+    code_scenario: codeScenario,
+  };
+}
+
+function createRandomAssetHasStat() {
+  const statId = faker.number.int({ min: 1, max: howMany.stat });
+
+  return {
+    stat_id: statId,
+  };
+}
+
+console.log(createRandomAssetHasStat());
+
 function createRandomUser() {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const username = faker.internet.userName({ firstName, lastName });
   const email = faker.internet.email({ firstName, lastName });
   const password = faker.internet.password();
-  const roleId = faker.number.int({ min: 1, max: 3 });
+  const roleId = faker.number.int({ min: 1, max: howMany.role });
 
   return {
     username,
@@ -28,7 +172,7 @@ function createRandomRole() {
    * admin : 3
    */
 
-  const random = Math.floor(Math.random() * 3 + 1);
+  const random = faker.number.int({ min: 1, max: howMany.role });
   const authorizationLevel = random;
   let roleName;
 
@@ -80,23 +224,6 @@ function createRandomScenario() {
   };
 }
 
-function createRandomstat() {
-  const name = faker.helpers.arrayElement(['Force', 'Endurance', 'Intelligence', 'Dexterite',, 'Sagesse', 'Charisme', 'Perception', 'Vigueur', 'Agilité', 'Vitesse', 'Autre']);
-  return { name };
-}
-
-function createRandomAssets() {
-  const name = faker.helpers.arrayElement(['Arme', 'Armure', 'Bagage', 'Autre']);
-  const description = faker.lorem.paragraph();
-  const imageUrl = faker.image.avatar();
-
-  return {
-    name,
-    description,
-    imageUrl,
-  };
-}
-
 function createRandomRessource() {
   // const type =
   const name = faker.helpers.arrayElement(['Outil', 'Matériel', 'Inventaire', 'Autre']);
@@ -110,37 +237,18 @@ function createRandomRessource() {
   };
 }
 
-function createRandomCharacter() {
-  const type = faker.helpers.arrayElement(['Hero', 'PNJ']);
-  const characterClass = faker.helpers.arrayElement(['Barbare', 'Guerrier', 'Mage', 'Paladin', 'Voleur', 'Autre']);
-  const lineage = faker.helpers.arrayElement(['Vampire', 'Loup-Garou', 'Magicien', 'Zombie', 'Autre']);
-  const isHostile = faker.helpers.arrayElement([true, false]);
-
-  return {
-    type,
-    class: characterClass,
-    lineage,
-    isHostile,
-  };
+// Générer 10 items
+for (let i = 0; i < 10; i++) {
+  items.push(createRandomItem());
 }
 
-function createRandomItem() {
-  const name = faker.helpers.arrayElement(['Arme', 'Armure', 'Bagage', 'Autre']);
-  const description = faker.lorem.paragraph();
-  const imageUrl = faker.image.avatar();
-
-  return {
-    name,
-    description,
-    imageUrl,
-  };
-}
-
+/*
 const { Client } = pg;
 const client = new Client();
 await client.connect();
 
 await client.query('TRUNCATE TABLE "role", "user","scenario", "category", "stat", "assets", "ressource", "item" RESTART IDENTITY');
+*/
 
 const userQueries = [];
 const roleQueries = [];
@@ -152,6 +260,7 @@ const ressourceQueries = [];
 const itemQueries = [];
 const characterQueries = [];
 
+/*
 users.forEach((user) => {
   const query = client.query(
     `
@@ -160,7 +269,7 @@ users.forEach((user) => {
         "email",
         "password",
         "role_id"
-      ) VALUES 
+      ) VALUES
         ($1, $2, $3,$4)
         RETURNING *
       `,
@@ -174,6 +283,8 @@ users.forEach((user) => {
 
   userQueries.push(query);
 });
+
+*/
 
 // TODO
 
