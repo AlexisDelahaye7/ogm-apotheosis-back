@@ -10,7 +10,7 @@ export default {
       throw new ApiError('User not found', { statusCode: 404 });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY, { algorithm: 'RS256' });
+    const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY, { algorithm: 'HS256' });
     res.json(token);
   },
 };
