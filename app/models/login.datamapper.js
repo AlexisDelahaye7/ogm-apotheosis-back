@@ -2,11 +2,11 @@ import client from '../config/client.db.js';
 
 export default {
 
-  async findByPk(userId) {
+  async findByData(email, password) {
     const result = await client.query(
-      'SELECT * FROM users WHERE id = $1',
-      [userId],
+      'SELECT * FROM user WHERE email = $1 AND password = $2',
+      [email, password],
     );
-    return result.rows[0];
+    return result.rows;
   },
 };
