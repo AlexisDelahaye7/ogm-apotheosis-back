@@ -37,8 +37,8 @@ const stats = [];
 const ressources = [];
 const scenarios = [];
 const categories = [];
-const user = [];
-const role = [];
+const users = [];
+const roles = [];
 
 const assetsHaveStats = [];
 const reviews = [];
@@ -77,6 +77,8 @@ function createRandomHero() {
     code_scenario: codeScenario,
   };
 }
+
+console.log(createRandomHero());
 
 function createRandomNPC() {
   const name = faker.helpers.arrayElement(['Zombie', 'Loup', 'Alien', 'Dragon', 'Vagabond', 'Vampire', 'Orc', 'Pillard', 'Pirate']);
@@ -162,6 +164,7 @@ function createRandomUser() {
     role_id: roleId,
   };
 }
+console.log(createRandomUser());
 
 function createRandomRole() {
   /**
@@ -237,18 +240,64 @@ function createRandomRessource() {
   };
 }
 
+// Génération :
+
 // Générer 10 items
 for (let i = 0; i < 10; i++) {
   items.push(createRandomItem());
 }
 
-/*
+// Générer 10 Héros
+for (let i = 0; i < 10; i++) {
+  heros.push(createRandomHero());
+}
+
+// Générer 10 npcs
+for (let i = 0; i < 10; i++) {
+  npcs.push(createRandomNPC());
+}
+
+// Générer 10 ressources
+for (let i = 0; i < 10; i++) {
+  ressources.push(createRandomRessource());
+}
+
+// Générer 10 stats
+for (let i = 0; i < 10; i++) {
+  stats.push(createRandomStat());
+}
+
+// Générer 10 assets
+for (let i = 0; i < 10; i++) {
+  assetsHaveStats.push(createRandomAssetHasStat());
+}
+
+// Générer 10 users
+for (let i = 0; i < 10; i++) {
+  users.push(createRandomUser());
+}
+
+// Générer 10 roles
+for (let i = 0; i < 10; i++) {
+  roles.push(createRandomRole());
+}
+
+// Générer 10 categories
+for (let i = 0; i < 10; i++) {
+  categories.push(createRandomCategory());
+}
+
+// Générer 10 scenarios
+for (let i = 0; i < 10; i++) {
+  scenarios.push(createRandomScenario());
+}
+
+// Connexion au client
 const { Client } = pg;
 const client = new Client();
 await client.connect();
 
 await client.query('TRUNCATE TABLE "role", "user","scenario", "category", "stat", "assets", "ressource", "item" RESTART IDENTITY');
-*/
 
 const userQueries = [];
 const roleQueries = [];
@@ -260,7 +309,6 @@ const ressourceQueries = [];
 const itemQueries = [];
 const characterQueries = [];
 
-/*
 users.forEach((user) => {
   const query = client.query(
     `
@@ -284,7 +332,8 @@ users.forEach((user) => {
   userQueries.push(query);
 });
 
-*/
+const result = await Promise.all(userQueries);
+console.log(result);
 
 // TODO
 
