@@ -1,4 +1,7 @@
 import { fakerFR as faker } from '@faker-js/faker';
+import '../app/helpers/env.load.js';
+import pg from 'pg';
+import logger from '../app/helpers/logger.js';
 
 function createRandomUser() {
   const firstName = faker.person.firstName();
@@ -76,6 +79,101 @@ function createRandomScenario() {
     isVerified,
   };
 }
+
+function createRandomstat() {
+  const name = faker.helpers.arrayElement(['Force', 'Endurance', 'Intelligence', 'Dexterite',, 'Sagesse', 'Charisme', 'Perception', 'Vigueur', 'Agilité', 'Vitesse', 'Autre']);
+  return { name };
+}
+
+function createRandomAssets() {
+  const name = faker.helpers.arrayElement(['Arme', 'Armure', 'Bagage', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const imageUrl = faker.image.avatar();
+
+  return {
+    name,
+    description,
+    imageUrl,
+  };
+}
+
+function createRandomRessource() {
+  // const type =
+  const name = faker.helpers.arrayElement(['Outil', 'Matériel', 'Inventaire', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const url = faker.internet.url();
+
+  return {
+    name,
+    description,
+    url,
+  };
+}
+
+function createRandomCharacter() {
+  const type = faker.helpers.arrayElement(['Hero', 'PNJ']);
+  const characterClass = faker.helpers.arrayElement(['Barbare', 'Guerrier', 'Mage', 'Paladin', 'Voleur', 'Autre']);
+  const lineage = faker.helpers.arrayElement(['Vampire', 'Loup-Garou', 'Magicien', 'Zombie', 'Autre']);
+  const isHostile = faker.helpers.arrayElement([true, false]);
+
+  return {
+    type,
+    class: characterClass,
+    lineage,
+    isHostile,
+  };
+}
+
+function createRandomItem() {
+  const name = faker.helpers.arrayElement(['Arme', 'Armure', 'Bagage', 'Autre']);
+  const description = faker.lorem.paragraph();
+  const imageUrl = faker.image.avatar();
+
+  return {
+    name,
+    description,
+    imageUrl,
+  };
+}
+
+const { Client } = pg;
+const client = new Client();
+await client.connect();
+
+await client.query('TRUNCATE TABLE "role", "user","scenario", "category", "stat", "assets", "ressource", "item" RESTART IDENTITY');
+
+const userQueries = [];
+const roleQueries = [];
+const categoryQueries = [];
+const scenarioQueries = [];
+const statQueries = [];
+const assetsQueries = [];
+const ressourceQueries = [];
+const itemQueries = [];
+const characterQueries = [];
+
+users.forEach((user) => {
+  const query = client.query(
+    `
+      INSERT INTO "user" (
+        "username",
+        "email",
+        "password",
+        "role_id"
+      ) VALUES 
+        ($1, $2, $3,$4)
+        RETURNING *
+      `,
+    [
+      user.username,
+      user.email,
+      user.password,
+      user.role_id,
+    ],
+  );
+
+  userQueries.push(query);
+});
 
 // TODO
 
