@@ -2,6 +2,8 @@
 
 BEGIN;
 
+-- ! How to verify sequence ?
+
 SELECT "id", "username", "email", "password", "role_id" FROM "user" WHERE false;
 SELECT "id", "name", "authorization_level" FROM "role" WHERE false;
 SELECT "id", "name" FROM "category" WHERE false;

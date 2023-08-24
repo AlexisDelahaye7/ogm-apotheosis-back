@@ -59,16 +59,19 @@ CREATE TABLE "review" (
 
 CREATE TABLE "ressource" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
-  "type" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
+  "type" TEXT NOT NULL,
+  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "url" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
 
+-- CREATE SEQUENCE "asset_id_seq" AS INT INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1 START WITH 1;
+
 CREATE TABLE "asset" (
+  -- "id" INT PRIMARY KEY DEFAULT nextval('asset_id_seq'),
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "name" TEXT NOT NULL,
@@ -82,7 +85,7 @@ CREATE TABLE "stat" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "type" TEXT NOT NULL,
+  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
@@ -91,22 +94,34 @@ CREATE TABLE "asset_has_stat" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "stat_id" INT NOT NULL REFERENCES "stat" ("id"),
   "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
-  "level" INT NOT NULL,
+  "level" INT NOT NULL DEFAULT 1,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
 
 CREATE TABLE "hero" (
+  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "class" TEXT NOT NULL,
-  "lineage" TEXT NOT NULL
-) INHERITS ("asset");
+  "lineage" TEXT NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
 
 CREATE TABLE "npc" (
-  "is_hostile" BOOLEAN NOT NULL
-) INHERITS ("asset");
+  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "is_hostile" BOOLEAN NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
 
 CREATE TABLE "item" (
-  "type" TEXT NOT NULL
-) INHERITS ("asset");
+  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "type" TEXT NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
 
 COMMIT;
