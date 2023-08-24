@@ -1,6 +1,12 @@
 BEGIN;
 
-DROP TABLE IF EXISTS ("user", "role", "category", "scenario", "bookmark", "review", "ressource", "asset", "stat", "asset_has_stat", "hero", "pnj", "item")
+CREATE TABLE "role" (
+  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "name" TEXT NOT NULL,
+  "authorization_level" INT NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ
+);
 
 CREATE TABLE "user" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -8,14 +14,6 @@ CREATE TABLE "user" (
   "email" TEXT NOT NULL,
   "password" TEXT NOT NULL,
   "role_id" INT NOT NULL REFERENCES "role" ("id"),
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
-  "updated_at" TIMESTAMPTZ
-);
-
-CREATE TABLE "role" (
-  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "name" TEXT NOT NULL,
-  "authorization_level" INT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
@@ -61,16 +59,19 @@ CREATE TABLE "review" (
 
 CREATE TABLE "ressource" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
-  "type" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
+  "type" TEXT NOT NULL,
+  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "url" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
 
+-- CREATE SEQUENCE "asset_id_seq" AS INT INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1 START WITH 1;
+
 CREATE TABLE "asset" (
+  -- "id" INT PRIMARY KEY DEFAULT nextval('asset_id_seq'),
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "name" TEXT NOT NULL,
@@ -84,7 +85,7 @@ CREATE TABLE "stat" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "type" TEXT NOT NULL,
+  "scenario_id" INT NOT NULL REFERENCES "scenario" ("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
@@ -93,31 +94,34 @@ CREATE TABLE "asset_has_stat" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "stat_id" INT NOT NULL REFERENCES "stat" ("id"),
   "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
-  "level" INT NOT NULL,
+  "level" INT NOT NULL DEFAULT 1,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
 
 CREATE TABLE "hero" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  -- "parent_asset_id" INT NOT NULL REFERENCES "asset" ("id"),
   "class" TEXT NOT NULL,
+  "lineage" TEXT NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
-) INHERITS ("asset");
+);
 
-CREATE TABLE "pnj" (
+CREATE TABLE "npc" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "is_hostile" BOOLEAN NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
-) INHERITS ("asset");
+);
 
 CREATE TABLE "item" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "type" TEXT NOT NULL,
+  "asset_id" INT NOT NULL REFERENCES "asset" ("id"),
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
-) INHERITS ("asset");
+);
 
 COMMIT;
