@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.use('/auth', login);
 
-router.use('/', (req, res) => { res.send('coucou'); });
-
 router.use('/scenario', scenarioRouter);
+
+router.use('/', (req, res) => { res.send('coucou'); });
 
 router.use(errorHandler);
 
