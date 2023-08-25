@@ -1,5 +1,8 @@
 import pg from 'pg';
+
 import logger from '../helpers/logger.js';
+
+import '../helpers/env.load.js';
 
 const { Pool } = pg;
 
@@ -10,7 +13,7 @@ export default {
 
   async query(...params) {
     logger.debug(params);
-
     return this.originalClient.query(...params);
   },
+
 };
