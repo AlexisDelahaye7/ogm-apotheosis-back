@@ -1,15 +1,14 @@
 import jwt from 'jsonwebtoken';
 
 function jwtGuard(req, res, next) {
-  const idToken = req.headers.authorization;
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
-  jwt.verify(idToken, process.env.PRIVATE_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-    req.userToken = decoded;
-    next();
-  });
+  const idToken = req.headers.authorization;
+  if (err) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 }
 
 export default jwtGuard;

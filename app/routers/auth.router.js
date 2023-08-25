@@ -8,4 +8,8 @@ const router = express.Router();
 router.route('/login')
   .post(loginController.login);
 
+router.get('/getUserAuthLvl/:token', (req, res) => {
+  res.json({ authLvl });
+});
+
 export default router;
