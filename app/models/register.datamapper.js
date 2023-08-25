@@ -1,18 +1,18 @@
+import client from '../config/client.db.js';
+
 export default {
-  async createUser(req, res) {
+  async newUser(dataUser) {
     const query = `
-      INSERT INTO "user" ("email", "password", "role")
-      VALUES ($1, $2, $3);`;
+      INSERT INTO "user" ("username", "email", "password", "role_id")
+      VALUES ($1, $2, $3, $4);`;
     const values = [
-      req.body.email,
-      req.body.password,
-      req.body.role,
+      dataUser.username,
+      dataUser.email,
+      dataUser.password,
+      1,
     ];
 
-    const result = await registerDatamapper.query(query, values);
-
-    if (result.rowCount === 0) {
-      throw new ApiError('User not found', { statusCode: 404 });
-    }
+    const result = await client.query(query, values);
+    return result.rows;
   },
 };

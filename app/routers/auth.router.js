@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route('/register')
   .post(registerController.createUser);
-  
+
 router.post('/', loginController.login);
 
 export default router;
