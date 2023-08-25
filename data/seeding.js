@@ -694,6 +694,27 @@ fakeData.items.forEach((item) => {
   queries.item.push(query);
 });
 
+Promise.allSettled([
+  ...queries.role,
+  ...queries.user,
+  ...queries.category,
+  ...queries.scenario,
+  ...queries.bookmark,
+  ...queries.review,
+  ...queries.ressource,
+  ...queries.stat,
+  ...queries.asset,
+  ...queries.assetHasStat,
+  ...queries.hero,
+  ...queries.npc,
+  ...queries.item,
+]).then(() => {
+  logger.debug('Seeding done !');
+}).catch((err) => {
+  logger.error(err);
+});
+
+/*
 Promise.all(queries.role);
 Promise.all(queries.user);
 Promise.all(queries.category);
@@ -707,8 +728,7 @@ Promise.all(queries.assetHasStat);
 Promise.all(queries.hero);
 Promise.all(queries.npc);
 Promise.all(queries.item);
-
-logger.debug('Seeding done !');
+*/
 
 // TODO
 
