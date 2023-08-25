@@ -12,10 +12,11 @@ SELECT "id", "user_id", "scenario_id" FROM "bookmark" WHERE false;
 SELECT "id", "user_id", "scenario_id", "rate", "opinion" FROM "review" WHERE false;
 SELECT "id", "name", "type", "description", "url", "scenario_id" FROM "ressource" WHERE false;
 SELECT "id", "name", "description", "scenario_id", "image_url" FROM "asset" WHERE false;
-SELECT "id", "name", "description", "type" FROM "stat" WHERE false;
+SELECT "id", "name", "description" FROM "stat" WHERE false;
 SELECT "id", "stat_id", "asset_id", "level" FROM "asset_has_stat" WHERE false;
-SELECT "id", "name", "description", "scenario_id", "image_url" "class", "lineage" FROM "hero" WHERE false;
-SELECT "id", "name", "description", "scenario_id", "image_url", "is_hostile" FROM "npc" WHERE false;
-SELECT "id", "name", "description", "scenario_id", "image_url", "type" FROM "item" WHERE false;
+SELECT "id" "class", "lineage" FROM "hero" WHERE false;
+SELECT "id", "is_hostile" FROM "npc" WHERE false;
+SELECT "id", "type" FROM "item" WHERE false;
+SELECT "id", "name", "description", "scenario_id", "image_url", "created_at", "updated_at" FROM "asset" WHERE false;
 
 ROLLBACK;

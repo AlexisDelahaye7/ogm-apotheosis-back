@@ -694,19 +694,19 @@ fakeData.items.forEach((item) => {
   queries.item.push(query);
 });
 
-await Promise.all(queries.role);
-await Promise.all(queries.user);
-await Promise.all(queries.category);
-await Promise.all(queries.scenario);
-await Promise.all(queries.bookmark);
-await Promise.all(queries.review);
-await Promise.all(queries.ressource);
-await Promise.all(queries.stat);
-await Promise.all(queries.asset);
-await Promise.all(queries.assetHasStat);
-await Promise.all(queries.hero);
-await Promise.all(queries.npc);
-await Promise.all(queries.item);
+Promise.all(queries.role);
+Promise.all(queries.user);
+Promise.all(queries.category);
+Promise.all(queries.scenario);
+Promise.all(queries.bookmark);
+Promise.all(queries.review);
+Promise.all(queries.ressource);
+Promise.all(queries.stat);
+Promise.all(queries.asset);
+Promise.all(queries.assetHasStat);
+Promise.all(queries.hero);
+Promise.all(queries.npc);
+Promise.all(queries.item);
 
 logger.debug('Seeding done !');
 
