@@ -738,8 +738,10 @@ Promise.all(queries.item);
 // 2. Import de dotenv, pg et logger
 // 3. Connexion au client
 // 4. Clean les tables avec TRUNCATE et RESTART IDENTITY
-// 5. Initialise un tableau de requêtes vide. Il référence l'ensemble des requêtes d'insertion des catégories
+// 5. Initialise un tableau de requêtes vide. Il référence
+//    l'ensemble des requêtes d'insertion des catégories
 // 6. On itère sur l'objet contenant les fausses données
 // a. Générer la query d'insertion
 // b. Ajouter l'objet qui contient la query et la donnée au tableau de requêtes
-// 7. On génère une Promise qui contient l'ensemble des requêtes d'insertion et les valeurs associées qui sont ensuite ajoutées en BDD
+// 7. On génère une Promise qui contient l'ensemble des
+//  requêtes d'insertion et les valeurs associées qui sont ensuite ajoutées en BDD
