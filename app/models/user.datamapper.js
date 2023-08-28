@@ -20,6 +20,16 @@ export default {
     return result.rows[0];
   },
 
+  async findByEmail(email) {
+    const result = await client.query(
+      `
+      SELECT * FROM "user" WHERE email = $1
+      `,
+      [email],
+    );
+    return result.rows[0];
+  },
+
   async insert(user) {
     const result = await client.query(
       `
