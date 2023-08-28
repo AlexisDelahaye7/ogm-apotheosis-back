@@ -10,6 +10,7 @@ function getUserToken(req, res, next) {
     if (!decodedToken) return res.status(401).json({ message: 'Unauthorized' });
 
     req.user = decodedToken;
+
     next();
   } catch (err) {
     logger.error(err);

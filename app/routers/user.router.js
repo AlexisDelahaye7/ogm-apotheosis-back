@@ -1,14 +1,14 @@
 import express from 'express';
 import userController from '../controllers/user.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
-import checkIfOwnerOrAdmin from '../middlewares/checkIfOwnerOrAdmin.middleware.js';
+import checkIfOwner from '../middlewares/checkIfOwner.middleware.js';
 
 const router = express.Router();
 
 router
   .route('/:id')
   .get(userController.getOne)
-  .patch(getUserToken, checkIfOwnerOrAdmin, userController.updateOne) // jwt 1 owner
+  .patch(getUserToken, checkIfOwner, userController.updateOne) // jwt 1 owner
   .delete(userController.deleteOne); // jwt 1 owner
 
 router
