@@ -15,4 +15,57 @@ export default {
     return result.rows[0];
   },
 
+  async insert(scenario) {
+    const result = await client.query(
+      `
+      INSERT INTO "scenario" ("name", "description", "age", "duration", "nb_players", "category_id", "author_id", "is_verified")
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *
+      `,
+      [
+        scenario.name,
+        scenario.description,
+        scenario.age,
+        scenario.duration,
+        scenario.nb_players,
+        scenario.category_id,
+        scenario.author_id,
+        scenario.is_verified,
+      ],
+    );
+    return result.rows[0];
+  },
+
+  async update(id, scenario) {
+    const values = Object.values(scenario);
+    values.unshift(Number(id));
+    values.join(', ');
+
+    const keys = Object.keys(scenario);
+    const placeholders = keys.map((key, index) => `${key} = $${index + 2}`).join(', ');
+
+    const result = await client.query(
+      `
+      UPDATE "scenario"
+      SET ${placeholders}
+      WHERE id = $1
+      RETURNING *
+      `,
+      values,
+    );
+
+    return result.rows[0];
+  },
+
+  async delete(id) {
+    const result = await client.query(
+      `
+      DELETE FROM "scenario"
+      WHERE id = $1
+      RETURNING *
+      `,
+      [id],
+    );
+    return result.rows[0];
+  },
 };
