@@ -1,10 +1,13 @@
 import logger from '../helpers/logger.js';
+import findRoleByUserPk from '../models/role.datamapper.js';
 
-export default function (req, _, next) {
-  // récupérer le payload du token req.userToken
-  // vérifier si l'utilisateur est admin
-  // si oui, next()
-  // sinon, next(new ApiError('Unauthorized', { statusCode: 401 }));
-  console.log(req.userToken.payload);
+export default async function checkIfAdmin(req, res, next) {
+  const userRole = await findRoleByUserPk(req.user.id);
+  req.user.auth_level = userRole.auth_level;
+
+  if (userRole.auth_level < 3) return res.status(401).json({ message: 'Unauthorized' });
+
+  // ! next(new ApiError('Unauthorized', { statusCode: 401 }));
+
   next();
 }
