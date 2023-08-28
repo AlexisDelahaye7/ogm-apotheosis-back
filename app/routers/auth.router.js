@@ -17,8 +17,4 @@ router.route('/login')
 router.route('/register')
   .post(authController.register);
 
-router.get('/getUserAuthLvl/:token', (req, res) => {
-  res.json({ authLvl });
-});
-
 export default router;

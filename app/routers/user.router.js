@@ -12,6 +12,10 @@ router
   .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
 
 router
+  .route('./:id/AuthLevel')
+  .get(userController.getAuthLevel);
+
+router
   .route('/')
   .get(userController.getAll)
   .post(userController.createOne);
