@@ -1,19 +1,19 @@
 import express from 'express';
 import userController from '../controllers/user.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
-import checkIfOwner from '../middlewares/checkIfOwner.middleware.js';
+import checkIfOwnerAdmin from '../middlewares/checkIfOwnerAdmin.middleware.js';
 
 const router = express.Router();
 
 router
   .route('/:id')
   .get(userController.getOne)
-  .patch(getUserToken, checkIfOwner, userController.updateOne) // jwt 1 owner
-  .delete(userController.deleteOne); // jwt 1 owner
+  .patch(getUserToken, checkIfOwnerAdmin, userController.updateOne)
+  .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
 
 router
   .route('/')
-  .get(userController.getAll) // jwt 3
+  .get(userController.getAll)
   .post(userController.createOne);
 
 export default router;
