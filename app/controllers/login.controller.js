@@ -12,6 +12,7 @@ export default {
     }
 
     const token = createJwt(user.id);
+
     req.headers.authorization = token;
     res.status(200).json(token);
   },

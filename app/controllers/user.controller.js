@@ -1,5 +1,6 @@
 import userDatamapper from '../models/user.datamapper.js';
 import { ApiError } from '../middlewares/error.middleware.js';
+import logger from '../helpers/logger.js';
 
 // TODO : add data validation
 
@@ -24,8 +25,18 @@ export default {
   },
 
   async updateOne(req, res) {
-    const user = await userDatamapper.update(req.params.id, req.body);
-    return res.json(user);
+    try {
+      const user = await userDatamapper.update(req.params.id, req.body);
+
+      if (!user) {
+        throw new ApiError('User not found', { statusCode: 404 });
+      }
+
+      return res.json(user);
+    } catch (error) {
+      logger.error(error);
+      return res.status(error.statusCode || 500).json({ message: error.message });
+    }
   },
 
   async deleteOne(req, res) {

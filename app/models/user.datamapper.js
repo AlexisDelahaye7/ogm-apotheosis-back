@@ -33,15 +33,23 @@ export default {
   },
 
   async update(id, user) {
+    const values = Object.values(user);
+    values.unshift(Number(id));
+    values.join(', ');
+
+    const keys = Object.keys(user);
+    const placeholders = keys.map((key, index) => `${key} = $${index + 2}`).join(', ');
+
     const result = await client.query(
       `
         UPDATE "user"
-        SET "username" = $1, "email" = $2, "password" = $3
-        WHERE id = $4
+        SET ${placeholders}
+        WHERE id = $1
         RETURNING *
       `,
-      [user.username, user.email, user.password, id],
+      values,
     );
+
     return result.rows[0];
   },
 
