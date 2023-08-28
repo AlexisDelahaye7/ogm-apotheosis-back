@@ -1,5 +1,5 @@
 import express from 'express';
-import loginController from '../controllers/login.controller.js';
+import authController from '../controllers/auth.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import userController from '../controllers/user.controller.js';
 
@@ -12,7 +12,10 @@ router
   .get(getUserToken, userController.getCurrent);
 
 router.route('/login')
-  .post(loginController.login);
+  .post(authController.login);
+
+router.route('/register')
+  .post(authController.register);
 
 router.get('/getUserAuthLvl/:token', (req, res) => {
   res.json({ authLvl });
