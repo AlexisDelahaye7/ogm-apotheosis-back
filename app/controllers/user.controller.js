@@ -26,6 +26,7 @@ export default {
 
   async updateOne(req, res) {
     try {
+      console.log('TEST');
       const user = await userDatamapper.update(req.params.id, req.body);
 
       if (!user) {

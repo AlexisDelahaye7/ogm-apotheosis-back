@@ -7,9 +7,10 @@ import logger from './logger.js';
  * @returns {boolean|object} false if invalid, decoded token if valid
  */
 
-export default function verifyJwt(token) {
+export default function verifyJwt(bearerToken) {
   try {
-    const decoded = jwt.verify(token, process.env.PRIVATE_KEY).replace('BEarer ', '');
+    const token = bearerToken.replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
     return decoded;
   } catch (err) {
     logger.error(err);

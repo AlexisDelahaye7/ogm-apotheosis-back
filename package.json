@@ -8,7 +8,8 @@
     "start": "NODE_ENV=production node .",
     "dev": "npx nodemon",
     "db:deploy": "sqitch deploy; node ./data/seeding.js",
-    "db:reset": "sqitch revert -y; npm run db:deploy"
+    "db:reset": "sqitch revert -y; npm run db:deploy",
+    "start-gendoc": "node docs/swagger.js"
   },
   "repository": {
     "type": "git",
@@ -44,10 +45,11 @@
     "debug": "^4.3.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-jsdoc-swagger": "^1.8.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
     "pg": "^8.11.3",
+    "swagger-autogen": "^2.23.5",
+    "swagger-ui-express": "^5.0.0",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1"
   }
