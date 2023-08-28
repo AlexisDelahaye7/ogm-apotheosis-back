@@ -43,4 +43,13 @@ export default {
     const user = await userDatamapper.delete(req.params.id);
     return res.json(user);
   },
+
+  async getCurrent(req, res) {
+    const user = await userDatamapper.findByPk(req.user.id);
+
+    if (!user) {
+      throw new ApiError('User not found', { statusCode: 404 });
+    }
+    return res.json(user);
+  },
 };

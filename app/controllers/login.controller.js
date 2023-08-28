@@ -7,6 +7,8 @@ export default {
   async login(req, res) {
     const user = await loginDatamapper.findByData(req.body.email, req.body.password);
 
+    console.log(req.body);
+
     if (!user) {
       throw new ApiError('User not found', { statusCode: 404 });
     }
