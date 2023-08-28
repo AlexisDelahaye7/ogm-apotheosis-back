@@ -9,7 +9,7 @@ import logger from './logger.js';
 
 export default function verifyJwt(token) {
   try {
-    const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
+    const decoded = jwt.verify(token, process.env.PRIVATE_KEY).replace('BEarer ', '');
     return decoded;
   } catch (err) {
     logger.error(err);
