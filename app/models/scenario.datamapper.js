@@ -7,10 +7,18 @@ export default {
     return result.rows;
   },
 
-  async findById(id) {
+  async findByPk(id) {
     const result = await client.query(
       'SELECT * FROM "scenario" WHERE id = $1',
       [id],
+    );
+    return result.rows[0];
+  },
+
+  async findByName(name) {
+    const result = await client.query(
+      'SELECT * FROM "scenario" WHERE name = $1',
+      [name],
     );
     return result.rows[0];
   },
