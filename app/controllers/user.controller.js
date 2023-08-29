@@ -79,7 +79,7 @@ export default {
       if (!user) {
         throw new ApiError('User not found', { statusCode: 404 });
       }
-      return res.json(user);
+      return res.json(true);
     } catch (err) {
       return next(err);
     }
