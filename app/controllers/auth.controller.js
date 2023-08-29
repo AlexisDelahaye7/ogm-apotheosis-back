@@ -37,7 +37,8 @@ export default {
       const encryptedPassword = await bcrypt.hash(password, salt);
 
       const user = await userDatamapper.insert({
-        ...req.body,
+        username,
+        email,
         password: encryptedPassword,
       });
 
