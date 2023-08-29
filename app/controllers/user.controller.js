@@ -12,12 +12,12 @@ export default {
   },
 
   async getOne(req, res) {
-    const user = await userDatamapper.findByPk(req.params.id);
+    const result = await userDatamapper.findByPk(req.params.id);
 
-    if (!user) {
+    if (!result[0]) {
       throw new ApiError('User not found', { statusCode: 404 });
     }
-    return res.json(user);
+    return res.json(result[0]);
   },
 
   async createOne(req, res) {
