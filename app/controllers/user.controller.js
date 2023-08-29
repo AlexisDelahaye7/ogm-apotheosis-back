@@ -73,6 +73,7 @@ export default {
   async getAuthLevel(req, res, next) {
     try {
       const userRole = await roleDatamapper.findRoleByUserPk(req.params.id);
+      if (!userRole) { throw new ApiError('User not found', { statusCode: 404 }); }
       return res.json(userRole.auth_level);
     } catch (err) {
       return next(err);
