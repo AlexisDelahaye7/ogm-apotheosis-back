@@ -6,7 +6,8 @@ import checkIfAuthorAdmin from '../middlewares/checkIfAuthorAdmin.middleware .js
 const router = express.Router();
 
 router.route('/')
-  .get(scenarioController.getAll);
+  .get(scenarioController.getAll)
+  .post(scenarioController.createOne);
 
 router.route('/:id')
   /**
@@ -17,7 +18,6 @@ router.route('/:id')
    * @param {Object} scenario.body.required - scenario data
    */
   .get(scenarioController.getOne)
-  .post(scenarioController.createOne)
   .patch(scenarioController.updateOne)
   .delete(getUserToken, checkIfAuthorAdmin, scenarioController.deleteOne);
 

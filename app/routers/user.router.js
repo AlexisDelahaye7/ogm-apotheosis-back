@@ -17,7 +17,6 @@ router
 
 router
   .route('/')
-  .get(getUserToken, checkIfOwnerAdmin, userController.getAll)
-  .post(userController.createOne);
+  .get(userController.getAll);
 
 export default router;

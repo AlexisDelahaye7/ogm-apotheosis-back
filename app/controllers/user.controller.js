@@ -6,34 +6,29 @@ import logger from '../helpers/logger.js';
 // TODO : add data validation
 
 export default {
-  async getAll(req, res, next) {
-    try {
-      const users = await userDatamapper.findAll();
-      return res.json(users);
-    } catch (err) {
-      return next(err);
-    }
+  async getAll(req, res) {
+    const users = await userDatamapper.findAll();
+
+    const cleanUsers = users.map((user) => ({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    }));
+    return res.json(cleanUsers);
   },
 
-  async getOne(req, res, next) {
-    try {
-      const result = await userDatamapper.findByPk(req.params.id);
-      if (!result) {
-        throw new ApiError('User not found', { statusCode: 404 });
-      }
-      return res.json(result);
-    } catch (err) {
-      return next(err);
-    }
-  },
+  async getOne(req, res) {
+    const result = await userDatamapper.findByPk(req.params.id);
 
-  async createOne(req, res, next) {
-    try {
-      const user = await userDatamapper.insert(req.body);
-      return res.json(user);
-    } catch (err) {
-      return next(err);
+    if (!result) {
+      throw new ApiError('User not found', { statusCode: 404 });
     }
+    const cleanUser = {
+      id: result.id,
+      username: result.username,
+      email: result.email,
+    };
+    return res.json(cleanUser);
   },
 
   async updateOne(req, res, next) {
