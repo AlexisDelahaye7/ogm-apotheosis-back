@@ -30,6 +30,16 @@ export default {
     return result.rows[0];
   },
 
+  async findByUsername(username) {
+    const result = await client.query(
+      `
+      SELECT * FROM "user" WHERE username = $1
+      `,
+      [username],
+    );
+    return result.rows[0];
+  },
+
   async update(id, user) {
     const values = Object.values(user);
     values.unshift(Number(id));

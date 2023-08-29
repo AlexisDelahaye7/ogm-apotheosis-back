@@ -1,7 +1,7 @@
+import bcrypt from 'bcrypt';
 import userDatamapper from '../models/user.datamapper.js';
 import roleDatamapper from '../models/role.datamapper.js';
 import { ApiError } from '../middlewares/error.middleware.js';
-import logger from '../helpers/logger.js';
 
 // TODO : add data validation
 
@@ -33,11 +33,41 @@ export default {
 
   async updateOne(req, res, next) {
     try {
-      const user = await userDatamapper.update(req.params.id, req.body);
-      if (!user) {
+      const id = Number(req.params.id);
+      const { username, email, password } = req.body;
+
+      // si req.body.email existe déjà en dehors de l'utilisateur courant, on renvoie une erreur
+      const userFound = await userDatamapper.findByEmail(email);
+
+      if (userFound && userFound.id !== id) {
+        throw new ApiError('Email already exists', { statusCode: 409 });
+      }
+
+      // si req.body.username existe déjà en dehors de l'utilisateur courant, on renvoie une erreur
+      const userFound2 = await userDatamapper.findByUsername(username);
+      if (userFound2 && userFound2.id !== id) {
+        throw new ApiError('Username already exists', { statusCode: 409 });
+      }
+
+      const salt = await bcrypt.genSalt();
+      const encryptedPassword = await bcrypt.hash(password, salt);
+
+      req.body.updated_at = new Date();
+      req.body.password = encryptedPassword;
+
+      const result = await userDatamapper.update(req.params.id, req.body);
+      if (!result) {
         throw new ApiError('User not found', { statusCode: 404 });
       }
-      return res.json(user);
+
+      const cleanResult = {
+        id: result.id,
+        username: result.username,
+        email: result.email,
+        role_id: result.role_id,
+      };
+
+      return res.json(cleanResult);
     } catch (err) {
       return next(err);
     }
@@ -46,20 +76,10 @@ export default {
   async deleteOne(req, res, next) {
     try {
       const user = await userDatamapper.delete(req.params.id);
-      return res.json(user);
-    } catch (err) {
-      return next(err);
-    }
-  },
-
-  async getCurrent(req, res, next) {
-    try {
-      const user = await userDatamapper.findByPk(req.user.id);
       if (!user) {
         throw new ApiError('User not found', { statusCode: 404 });
       }
-      const cleanUser = { id: user.id };
-      return res.json(cleanUser);
+      return res.json(user);
     } catch (err) {
       return next(err);
     }

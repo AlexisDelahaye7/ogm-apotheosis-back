@@ -14,7 +14,7 @@ router
 
 router
   .route('/:id/authLevel')
-  .get(userController.getAuthLevel);
+  .get(getUserToken, checkIfOwnerAdmin, userController.getAuthLevel);
 
 router
   .route('/')
