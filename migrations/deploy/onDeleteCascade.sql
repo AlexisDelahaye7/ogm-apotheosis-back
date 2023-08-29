@@ -8,7 +8,7 @@ DROP CONSTRAINT "asset_scenario_id_fkey",
 ADD CONSTRAINT "asset_scenario_id_fkey"
 FOREIGN KEY ("scenario_id")
 REFERENCES "scenario" ("id")
-ON DELETE CASCADE;
+ON DELETE CASCADE;  
 
 
 -- Appliquer ON DELETE CASCADE à la contrainte de clé étrangère dans la table "bookmark"
@@ -19,12 +19,26 @@ FOREIGN KEY ("scenario_id")
 REFERENCES "scenario" ("id") 
 ON DELETE CASCADE;
 
+ALTER TABLE "bookmark"
+DROP CONSTRAINT "bookmark_user_id_fkey",
+ADD CONSTRAINT "bookmark_user_id_fkey"
+FOREIGN KEY ("user_id")
+REFERENCES "user" ("id")
+ON DELETE CASCADE;
+
 -- Appliquer ON DELETE CASCADE à la contrainte de clé étrangère dans la table "review"
 ALTER TABLE "review"
 DROP CONSTRAINT "review_scenario_id_fkey",
 ADD CONSTRAINT "review_scenario_id_fkey" 
 FOREIGN KEY ("scenario_id") 
 REFERENCES "scenario" ("id") 
+ON DELETE CASCADE;
+
+ALTER TABLE "review"
+DROP CONSTRAINT "review_user_id_fkey",
+ADD CONSTRAINT "review_user_id_fkey"
+FOREIGN KEY ("user_id")
+REFERENCES "user" ("id")
 ON DELETE CASCADE;
 
 -- Appliquer ON DELETE CASCADE à la contrainte de clé étrangère dans la table "asset_has_stat"
@@ -81,6 +95,14 @@ DROP CONSTRAINT "stat_scenario_id_fkey",
 ADD CONSTRAINT "stat_scenario_id_fkey"
 FOREIGN KEY ("scenario_id")
 REFERENCES "scenario" ("id")
+ON DELETE CASCADE;
+
+-- Appliquer ON DELETE CASCADE à la contrainte de clé étrangère dans la table "scenario"
+ALTER TABLE "scenario"
+DROP CONSTRAINT "scenario_author_id_fkey",
+ADD CONSTRAINT "scenario_author_id_fkey"
+FOREIGN KEY ("author_id")
+REFERENCES "user" ("id")
 ON DELETE CASCADE;
 
 COMMIT;
