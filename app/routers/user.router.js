@@ -17,7 +17,6 @@ router
 
 router
   .route('/')
-  .get(userController.getAll)
-  .post(userController.createOne);
+  .get(userController.getAll);
 
 export default router;

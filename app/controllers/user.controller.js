@@ -31,11 +31,6 @@ export default {
     return res.json(cleanUser);
   },
 
-  async createOne(req, res) {
-    const user = await userDatamapper.insert(req.body);
-    return res.json(user);
-  },
-
   async updateOne(req, res) {
     try {
       console.log('TEST');
