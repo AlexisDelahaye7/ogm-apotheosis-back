@@ -52,7 +52,12 @@ export default {
     if (!user) {
       throw new ApiError('User not found', { statusCode: 404 });
     }
-    return res.json(user);
+
+    const cleanUser = {
+      id: user.id,
+    };
+
+    return res.json(cleanUser);
   },
 
   async getAuthLevel(req, res) {
