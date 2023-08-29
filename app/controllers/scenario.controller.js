@@ -13,7 +13,7 @@ export default {
 
   async getOne(req, res, next) {
     try {
-      const scenario = await scenarioDatamapper.findById(req.params.id);
+      const scenario = await scenarioDatamapper.findByPk(req.params.id);
 
       if (!scenario) {
         throw new ApiError('Scenario not found', { statusCode: 404 });
@@ -26,6 +26,9 @@ export default {
 
   async createOne(req, res, next) {
     try {
+      const foundScenario = await scenarioDatamapper.findByName(req.body.name);
+      if (foundScenario) throw new ApiError('Scenario already exists', { statusCode: 409 });
+
       const scenario = await scenarioDatamapper.insert(req.body);
       return res.json(scenario);
     } catch (err) {
@@ -35,6 +38,7 @@ export default {
 
   async updateOne(req, res, next) {
     try {
+      req.body.updated_at = new Date();
       const scenario = await scenarioDatamapper.update(req.params.id, req.body);
 
       if (!scenario) {

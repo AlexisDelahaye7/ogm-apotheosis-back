@@ -18,7 +18,7 @@ router.route('/:id')
    * @param {Object} scenario.body.required - scenario data
    */
   .get(scenarioController.getOne)
-  .patch(scenarioController.updateOne)
+  .patch(getUserToken, checkIfAuthorAdmin, scenarioController.updateOne)
   .delete(getUserToken, checkIfAuthorAdmin, scenarioController.deleteOne);
 
 export default router;
