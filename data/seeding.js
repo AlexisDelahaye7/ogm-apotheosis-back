@@ -38,12 +38,6 @@ howMany.assetHasStat = howMany.asset;
 
 howMany.roleAuthor = howMany.scenario;
 
-howMany.role = (
-  howMany.roleUser
-  + howMany.roleAuthor
-  + howMany.roleAdmin
-);
-
 /* GENERATE FAKE DATA */
 
 const createRandom = {
@@ -373,8 +367,8 @@ for (let i = 0; i < howMany.category; i += 1) {
 
 // roles
 logger.debug(`Generating ${howMany.role} roles...`);
-for (let i = 0; i < howMany.role; i += 1) {
-  fakeData.roles.push(createRandom.role(Math.floor(Math.random() * 3) + 1));
+for (let i = 1; i <= howMany.role; i += 1) {
+  fakeData.roles.push(createRandom.role(i));
 }
 
 // assets_have_stats
