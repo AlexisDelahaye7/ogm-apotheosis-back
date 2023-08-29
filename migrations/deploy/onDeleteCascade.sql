@@ -49,7 +49,6 @@ FOREIGN KEY ("stat_id")
 REFERENCES "stat" ("id")
 ON DELETE CASCADE;
 
--- Appliquer ON DELETE CASCADE à la contrainte de clé étrangère dans la table "asset_has_stat"
 ALTER TABLE "asset_has_stat"
 DROP CONSTRAINT "asset_has_stat_asset_id_fkey",
 ADD CONSTRAINT "asset_has_stat_asset_id_fkey"
@@ -104,5 +103,7 @@ ADD CONSTRAINT "scenario_author_id_fkey"
 FOREIGN KEY ("author_id")
 REFERENCES "user" ("id")
 ON DELETE CASCADE;
+
+
 
 COMMIT;
