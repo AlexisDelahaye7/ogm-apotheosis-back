@@ -14,10 +14,10 @@ export default {
   async getOne(req, res) {
     const result = await userDatamapper.findByPk(req.params.id);
 
-    if (!result[0]) {
+    if (!result) {
       throw new ApiError('User not found', { statusCode: 404 });
     }
-    return res.json(result[0]);
+    return res.json(result);
   },
 
   async createOne(req, res) {
