@@ -9,6 +9,13 @@ router.route('/')
   .get(scenarioController.getAll);
 
 router.route('/:id')
+  /**
+   * @swagger
+   * @tags Scenario
+   * @route GET /scenario/{id}
+   * @param {Number} id.path.required - scenario id
+   * @param {Object} scenario.body.required - scenario data
+   */
   .get(scenarioController.getOne)
   .post(scenarioController.createOne)
   .patch(scenarioController.updateOne)

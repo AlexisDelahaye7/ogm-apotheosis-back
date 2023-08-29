@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
   .route('/:id')
-  .get(userController.getOne)
+  .get(getUserToken, checkIfOwnerAdmin, userController.getOne)
   .patch(getUserToken, checkIfOwnerAdmin, userController.updateOne)
   .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
 
@@ -17,7 +17,7 @@ router
 
 router
   .route('/')
-  .get(userController.getAll)
+  .get(getUserToken, checkIfOwnerAdmin, userController.getAll)
   .post(userController.createOne);
 
 export default router;
