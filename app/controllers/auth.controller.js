@@ -5,44 +5,52 @@ import { ApiError } from '../middlewares/error.middleware.js';
 import createJwt from '../helpers/jwt.sign.js';
 
 export default {
-  async login(req, res) {
-    const { email, password } = req.body;
-    const user = await userDatamapper.findByEmail(email);
+  async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const user = await userDatamapper.findByEmail(email);
 
-    const isPasswordValid = bcrypt.compare(password, user.password);
+      const isPasswordValid = bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) throw new ApiError('Bad log', { statusCode: 401 });
+      if (!isPasswordValid) throw new ApiError('Bad log', { statusCode: 401 });
 
-    if (!user) {
-      throw new ApiError('User not found', { statusCode: 404 });
+      if (!user) {
+        throw new ApiError('User not found', { statusCode: 404 });
+      }
+
+      const token = createJwt(user.id);
+
+      req.headers.authorization = token;
+      return res.status(200).json(token);
+    } catch (err) {
+      return next(err);
     }
-
-    const token = createJwt(user.id);
-
-    req.headers.authorization = token;
-    res.status(200).json(token);
   },
 
-  async register(req, res) {
-    const { email, password } = req.body;
-    const userFound = await userDatamapper.findByEmail(email);
-    if (userFound) res.status(409).json({ message: 'User already exists' });
+  async register(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const userFound = await userDatamapper.findByEmail(email);
+      if (userFound) res.status(409).json({ message: 'User already exists' });
 
-    const salt = await bcrypt.genSalt();
-    const encryptedPassword = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt();
+      const encryptedPassword = await bcrypt.hash(password, salt);
 
-    const user = await userDatamapper.insert({
-      ...req.body,
-      password: encryptedPassword,
-    });
+      const user = await userDatamapper.insert({
+        ...req.body,
+        password: encryptedPassword,
+      });
 
-    const returnedUser = {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      token: createJwt(user.id),
-    };
+      const returnedUser = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        token: createJwt(user.id),
+      };
 
-    res.status(201).json(returnedUser);
+      return res.status(201).json(returnedUser);
+    } catch (err) {
+      return next(err);
+    }
   },
 };

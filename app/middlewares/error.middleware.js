@@ -11,9 +11,12 @@ export { default as ApiError } from '../errors/api.error.js';
 /**
  * @param { object } err Error class
  * @param { object } res Express response object
+ * @param { object } next Express next function
+ * @returns { object } Express response object
+ * @description Error managment middleware
  */
 
-export const errorHandler = (err, res) => {
+export const errorHandler = (err, _, res, next) => {
   const { message } = err;
   let userMessage = message;
   let statusCode = err.infos?.statusCode;
@@ -44,6 +47,7 @@ export const errorHandler = (err, res) => {
       status: 'error',
       statusCode,
       message: userMessage,
+      stack: res.app.get('env') === 'development' ? err.stack : {},
     });
   }
 };
