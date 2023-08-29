@@ -226,7 +226,7 @@
         }
       }
     },
-    "/user./{id}/AuthLevel": {
+    "/user/{id}/authLevel": {
       "get": {
         "description": "",
         "parameters": [
@@ -238,8 +238,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
