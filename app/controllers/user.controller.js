@@ -1,4 +1,5 @@
 import userDatamapper from '../models/user.datamapper.js';
+import roleDatamapper from '../models/role.datamapper.js';
 import { ApiError } from '../middlewares/error.middleware.js';
 import logger from '../helpers/logger.js';
 
@@ -52,5 +53,10 @@ export default {
       throw new ApiError('User not found', { statusCode: 404 });
     }
     return res.json(user);
+  },
+
+  async getAuthLevel(req, res) {
+    const userRole = await roleDatamapper.findRoleByUserPk(req.params.id);
+    return res.json(userRole.auth_level);
   },
 };

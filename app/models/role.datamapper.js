@@ -1,8 +1,9 @@
 import client from '../config/client.db.js';
 
-export default async function findRoleByUserPk(userId) {
-  const result = await client.query(
-    `
+export default {
+  async findRoleByUserPk(userId) {
+    const result = await client.query(
+      `
       SELECT
       "user"."id" AS "id",
       "role"."id" AS "role_id",
@@ -12,7 +13,8 @@ export default async function findRoleByUserPk(userId) {
       LEFT JOIN "role" ON "role"."id" = "user"."role_id"
       WHERE "user"."id" = $1;
       `,
-    [userId],
-  );
-  return result.rows[0];
-}
+      [userId],
+    );
+    return result.rows[0];
+  },
+};
