@@ -1,7 +1,6 @@
 import express from 'express';
 import authController from '../controllers/auth.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
-import userController from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -9,7 +8,7 @@ const router = express.Router();
 
 router
   .route('/current')
-  .get(getUserToken, userController.getCurrent);
+  .get(getUserToken, authController.getCurrent);
 
 router.route('/login')
   .post(authController.login);
