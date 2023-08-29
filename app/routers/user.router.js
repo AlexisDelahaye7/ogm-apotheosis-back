@@ -2,6 +2,7 @@ import express from 'express';
 import userController from '../controllers/user.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import checkIfOwnerAdmin from '../middlewares/checkIfOwnerAdmin.middleware.js';
+import checkIfAdmin from '../middlewares/checkIfAdmin.middleware.js';
 
 const router = express.Router();
 
@@ -17,6 +18,6 @@ router
 
 router
   .route('/')
-  .get(userController.getAll);
+  .get(getUserToken, checkIfAdmin, userController.getAll);
 
 export default router;
