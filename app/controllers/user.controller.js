@@ -8,7 +8,13 @@ import logger from '../helpers/logger.js';
 export default {
   async getAll(req, res) {
     const users = await userDatamapper.findAll();
-    return res.json(users);
+
+    const cleanUsers = users.map((user) => ({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    }));
+    return res.json(cleanUsers);
   },
 
   async getOne(req, res) {
@@ -17,7 +23,12 @@ export default {
     if (!result) {
       throw new ApiError('User not found', { statusCode: 404 });
     }
-    return res.json(result);
+    const cleanUser = {
+      id: result.id,
+      username: result.username,
+      email: result.email,
+    };
+    return res.json(cleanUser);
   },
 
   async createOne(req, res) {
