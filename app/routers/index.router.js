@@ -9,6 +9,8 @@ import { errorHandler } from '../middlewares/error.middleware.js';
 
 const router = express.Router();
 
+router.all('/', (req, res) => { res.send('coucou'); });
+
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
@@ -18,8 +20,12 @@ router.use('/scenario', scenarioRouter);
 
 router.use('/user', userRouter);
 
-router.use('/', (req, res) => { res.send('coucou'); });
+
+router.use((req, res, next) => {
+  res.status(404).json({ message: 'Not found' });
+})
 
 router.use(errorHandler);
+
 
 export default router;
