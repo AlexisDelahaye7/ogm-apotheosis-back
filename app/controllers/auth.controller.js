@@ -29,7 +29,7 @@ export default {
 
   async register(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const { username, email, password } = req.body;
       const userFound = await userDatamapper.findByEmail(email);
       if (userFound) res.status(409).json({ message: 'User already exists' });
 
