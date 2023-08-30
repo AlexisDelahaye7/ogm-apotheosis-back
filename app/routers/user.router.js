@@ -5,21 +5,22 @@ import checkIfOwnerAdmin from '../middlewares/checkIfOwnerAdmin.middleware.js';
 import checkIfAdmin from '../middlewares/checkIfAdmin.middleware.js';
 import updateSchema from '../validation/schemas/user.update.schema.js';
 import validate from '../middlewares/validator.middleware.js';
+import controllerHandler from '../middlewares/controller.middleware.js';
 
 const router = express.Router();
 
 router
   .route('/:id(\\d+)')
-  .get(getUserToken, checkIfOwnerAdmin, userController.getOne)
-  .patch(validate('body', updateSchema), getUserToken, checkIfOwnerAdmin, userController.updateOne)
-  .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
+  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getOne))
+  .patch(validate('body', updateSchema), getUserToken, checkIfOwnerAdmin, controllerHandler(userController.updateOne))
+  .delete(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.deleteOne));
 
 router
   .route('/:id(\\d+)/authLevel')
-  .get(getUserToken, checkIfOwnerAdmin, userController.getAuthLevel);
+  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getAuthLevel));
 
 router
   .route('/')
-  .get(getUserToken, checkIfAdmin, userController.getAll);
+  .get(getUserToken, checkIfAdmin, controllerHandler(userController.getAll));
 
 export default router;
