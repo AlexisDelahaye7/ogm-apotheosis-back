@@ -3,13 +3,15 @@ import userController from '../controllers/user.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import checkIfOwnerAdmin from '../middlewares/checkIfOwnerAdmin.middleware.js';
 import checkIfAdmin from '../middlewares/checkIfAdmin.middleware.js';
+import updateSchema from '../validation/schemas/updateUser.schema.js';
+import validate from '../middlewares/validate.middleware.js';
 
 const router = express.Router();
 
 router
   .route('/:id')
   .get(getUserToken, checkIfOwnerAdmin, userController.getOne)
-  .patch(getUserToken, checkIfOwnerAdmin, userController.updateOne)
+  .patch(validate('body', updateSchema), getUserToken, checkIfOwnerAdmin, userController.updateOne)
   .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
 
 router

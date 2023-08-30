@@ -9,4 +9,5 @@ export default Joi.object({
   category_id: Joi.number().required(),
   author_id: Joi.number().required(),
   is_verified: Joi.boolean().required(),
+  created: Joi.date().default(Date.now),
 });
