@@ -12,7 +12,7 @@ router.route('/')
   .get(scenarioController.getAll)
   .post(validate('body', createScenario), scenarioController.createOne);
 
-router.route('/:id')
+router.route('/:id(\\d+)')
   /**
    * @swagger
    * @tags Scenario
