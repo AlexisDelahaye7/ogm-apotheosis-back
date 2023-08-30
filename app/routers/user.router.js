@@ -7,13 +7,13 @@ import checkIfAdmin from '../middlewares/checkIfAdmin.middleware.js';
 const router = express.Router();
 
 router
-  .route('/:id')
+  .route('/:id(\\d+)')
   .get(getUserToken, checkIfOwnerAdmin, userController.getOne)
   .patch(getUserToken, checkIfOwnerAdmin, userController.updateOne)
   .delete(getUserToken, checkIfOwnerAdmin, userController.deleteOne);
 
 router
-  .route('/:id/authLevel')
+  .route('/:id(\\d+)/authLevel')
   .get(getUserToken, checkIfOwnerAdmin, userController.getAuthLevel);
 
 router
