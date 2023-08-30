@@ -1,5 +1,5 @@
 import logger from '../helpers/logger.js';
-import { ApiError } from './error.middleware.js';
+import { ApiError } from '../middlewares/error.middleware.js';
 
 /**
  * Générateur de middleware pour la validation
