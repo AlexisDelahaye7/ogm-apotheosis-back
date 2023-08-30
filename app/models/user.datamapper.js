@@ -40,6 +40,18 @@ export default {
     return result.rows[0];
   },
 
+  async insert(user) {
+    const result = await client.query(
+      `
+      INSERT INTO "user" (username, email, password, role_id)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+      `,
+      [user.username, user.email, user.password, user.role_id],
+    );
+    return result.rows[0];
+  },
+
   async update(id, user) {
     const values = Object.values(user);
     values.unshift(Number(id));

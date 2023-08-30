@@ -35,10 +35,10 @@ export default {
       const { username, email, password } = req.body;
 
       const userFound = await userDatamapper.findByEmail(email);
-      if (userFound) res.status(409).json({ message: 'Email already taken' });
+      if (userFound) { return res.status(409).json({ message: 'Email already taken' }); }
 
       const userFound2 = await userDatamapper.findByUsername(username);
-      if (userFound2) res.status(409).json({ message: 'Username already taken' });
+      if (userFound2) { return res.status(409).json({ message: 'Username already taken' }); }
 
       const salt = await bcrypt.genSalt();
       const encryptedPassword = await bcrypt.hash(password, salt);
@@ -47,6 +47,7 @@ export default {
         username,
         email,
         password: encryptedPassword,
+        role_id: 1,
       });
 
       const returnedUser = {

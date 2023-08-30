@@ -3,8 +3,8 @@ import userController from '../controllers/user.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import checkIfOwnerAdmin from '../middlewares/checkIfOwnerAdmin.middleware.js';
 import checkIfAdmin from '../middlewares/checkIfAdmin.middleware.js';
-import updateSchema from '../validation/schemas/updateUser.schema.js';
-import validate from '../middlewares/validate.middleware.js';
+import updateSchema from '../validation/schemas/user.update.schema.js';
+import validate from '../middlewares/validator.middleware.js';
 
 const router = express.Router();
 

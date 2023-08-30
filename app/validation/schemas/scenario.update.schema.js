@@ -8,5 +8,4 @@ export default Joi.object({
   nb_players: Joi.number(),
   category_id: Joi.number(),
   author_id: Joi.number(),
-  is_verified: Joi.boolean().required(),
 });

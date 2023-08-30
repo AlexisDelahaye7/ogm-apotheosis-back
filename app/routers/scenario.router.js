@@ -2,15 +2,15 @@ import express from 'express';
 import scenarioController from '../controllers/scenario.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import checkIfAuthorAdmin from '../middlewares/checkIfAuthorAdmin.middleware .js';
-import validate from '../middlewares/validate.middleware.js';
-import createScenario from '../validation/schemas/createScenario.schema.js';
-import updateScenario from '../validation/schemas/updateScenario.schema.js';
+import validate from '../middlewares/validator.middleware.js';
+import createSchema from '../validation/schemas/scenario.create.schema.js';
+import updateSchema from '../validation/schemas/scenario.update.schema.js';
 
 const router = express.Router();
 
 router.route('/')
   .get(scenarioController.getAll)
-  .post(validate('body', createScenario), scenarioController.createOne);
+  .post(validate('body', createSchema), scenarioController.createOne);
 
 router.route('/:id(\\d+)')
   /**
@@ -21,7 +21,7 @@ router.route('/:id(\\d+)')
    * @param {Object} scenario.body.required - scenario data
    */
   .get(scenarioController.getOne)
-  .patch(validate('body', updateScenario), scenarioController.updateOne)
+  .patch(validate('body', updateSchema), scenarioController.updateOne)
   .delete(getUserToken, checkIfAuthorAdmin, scenarioController.deleteOne);
 
 export default router;
