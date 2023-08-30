@@ -4,6 +4,7 @@ import getUserToken from '../middlewares/jwt.middleware.js';
 import validate from '../middlewares/validator.middleware.js';
 import registerSchema from '../validation/schemas/register.create.schema.js';
 import loginSchema from '../validation/schemas/login.post.schema.js';
+import controllerHandler from '../middlewares/controller.middleware.js';
 
 const router = express.Router();
 
@@ -11,12 +12,12 @@ const router = express.Router();
 
 router
   .route('/current')
-  .get(getUserToken, authController.getCurrent);
+  .get(getUserToken, controllerHandler(authController.getCurrent));
 
 router.route('/login')
-  .post(validate('body', loginSchema), authController.login);
+  .post(validate('body', loginSchema), controllerHandler(authController.login));
 
 router.route('/register')
-  .post(validate('body', registerSchema), authController.register);
+  .post(validate('body', registerSchema), controllerHandler(authController.register));
 
 export default router;
