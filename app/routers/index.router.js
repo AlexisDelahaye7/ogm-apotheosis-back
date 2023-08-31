@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import scenarioRouter from './scenario.router.js';
 import authRouter from './auth.router.js';
 import userRouter from './user.router.js';
+import categoryRouter from './category.router.js';
 import swaggerDocument from '../../docs/swagger.json' assert { type: 'json' };
 
 import { errorHandler } from '../middlewares/error.middleware.js';
@@ -22,6 +23,8 @@ router.use('/auth', authRouter);
 router.use('/scenario', scenarioRouter);
 
 router.use('/user', userRouter);
+
+router.use('/category', categoryRouter);
 
 
 router.use((req, res, next) => {
