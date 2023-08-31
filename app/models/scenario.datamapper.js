@@ -26,7 +26,7 @@ export default {
   async insert(scenario) {
     const result = await client.query(
       `
-      INSERT INTO "scenario" ("name", "description", "age", "duration", "nb_players")
+      INSERT INTO "scenario" ("name", "description", "age", "duration", "nb_players", "category_id", "author_id", "is_verified")
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING *
       `,
@@ -37,6 +37,8 @@ export default {
         scenario.duration,
         scenario.nb_players,
         scenario.category_id,
+        scenario.author_id,
+        scenario.is_verified,
       ],
     );
     return result.rows[0];
