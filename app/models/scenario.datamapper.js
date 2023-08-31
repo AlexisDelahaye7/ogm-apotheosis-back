@@ -3,13 +3,19 @@ import client from '../config/client.db.js';
 export default {
 
   async findAll() {
-    const result = await client.query('SELECT * FROM "scenario"');
+    const result = await client.query(`
+      SELECT "scenario".*, "category"."name" AS "category_name" FROM "scenario"
+      JOIN "category" ON "category"."id" = "scenario"."category_id"
+    `);
     return result.rows;
   },
 
   async findByPk(id) {
     const result = await client.query(
-      'SELECT * FROM "scenario" WHERE id = $1',
+      `SELECT "scenario".*,
+      "category"."name" AS "category_name" FROM "scenario"
+      JOIN "category" ON "category"."id" = "scenario"."category_id"
+      WHERE "scenario"."id" = $1;`,
       [id],
     );
     return result.rows[0];
