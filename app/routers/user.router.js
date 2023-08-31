@@ -23,4 +23,8 @@ router
   .route('/')
   .get(getUserToken, checkIfAdmin, controllerHandler(userController.getAll));
 
+router
+  .route('/:id(\\d+)/bookmarks')
+  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getBookmarks));
+
 export default router;
