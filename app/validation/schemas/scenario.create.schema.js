@@ -8,6 +8,6 @@ export default Joi.object({
   nb_players: Joi.number().required(),
   category_id: Joi.number().required(),
   author_id: Joi.number().required(),
-  // is_verified: Joi.boolean().required(),
+  is_verified: Joi.boolean().required(),
   created: Joi.date().default(Date.now),
 });
