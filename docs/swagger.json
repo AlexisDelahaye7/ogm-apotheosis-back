@@ -80,7 +80,7 @@
         }
       }
     },
-    "/scenario/{id(\\\\d+,getUserToken,checkIfAuthorAdmin,controllerHandler(scenarioController.{_{__function__}_}deleteOne));exportdefaultrouter;}": {
+    "/scenario/{id(\\\\d+,getUserToken,checkIfAuthorAdmin,controllerHandler(scenarioController.{_{__function__}_}deleteOne));}": {
       "delete": {
         "description": "",
         "responses": {
@@ -92,6 +92,56 @@
     },
     "/scenario/{id(\\\\d+,validate(body,updateSchema),controllerHandler(scenarioController.updateOne)}": {
       "patch": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getReviews));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getRessources));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getItems));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getHeros));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getNpc));exportdefaultrouter;}": {
+      "get": {
         "description": "",
         "responses": {
           "default": {
@@ -141,6 +191,16 @@
       }
     },
     "/user/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,getUserToken,checkIfOwnerAdmin,controllerHandler(userController.{_{__function__}_}getBookmarks));exportdefaultrouter;}": {
       "get": {
         "description": "",
         "responses": {
