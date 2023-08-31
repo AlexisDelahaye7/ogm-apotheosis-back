@@ -12,5 +12,5 @@ export default async function checkIfAuthor(req, res, next) {
 
   // ! sinon, next(new ApiError('Unauthorized', { statusCode: 401 }));
 
-  next();
+  return next();
 }

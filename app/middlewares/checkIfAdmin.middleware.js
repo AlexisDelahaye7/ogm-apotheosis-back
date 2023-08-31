@@ -9,5 +9,5 @@ export default async function checkIfAdmin(req, res, next) {
 
   // ! next(new ApiError('Unauthorized', { statusCode: 401 }));
 
-  next();
+  return next();
 }
