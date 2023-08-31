@@ -34,7 +34,7 @@ CREATE TABLE "scenario" (
   "nb_players" INT NOT NULL,
   "category_id" INT NOT NULL REFERENCES "category" ("id"),
   "author_id" INT NOT NULL REFERENCES "user" ("id"),
-  "is_verified" BOOLEAN NOT NULL DEFAULT false,
+  "is_verified" BOOLEAN DEFAULT false,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ
 );
