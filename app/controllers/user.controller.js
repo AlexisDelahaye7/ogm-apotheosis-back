@@ -83,4 +83,10 @@ export default {
     if (!userRole) { throw new ApiError('User not found', { statusCode: 404 }); }
     return res.json(userRole.auth_level);
   },
+
+  async getBookmarks(req, res) {
+    const bookmarks = await userDatamapper.findBookmarksByUserPk(req.params.id);
+    if (!bookmarks) { throw new ApiError('User not found', { statusCode: 404 }); }
+    return res.json(bookmarks);
+  },
 };

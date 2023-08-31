@@ -44,4 +44,45 @@ export default {
 
     return res.json(scenario);
   },
+
+  async getReviews(req, res) {
+    const reviews = await scenarioDatamapper.findReviewsByScenarioPk(req.params.id);
+
+    if (reviews === 0) throw new ApiError(`Reviews not found for scenario ${req.params.id}`, { statusCode: 404 });
+
+    return res.json(reviews);
+  },
+
+  async getRessources(req, res) {
+    const ressources = await scenarioDatamapper.findRessourcesByScenarioPk(req.params.id);
+
+    if (ressources.length === 0) throw new ApiError(`Ressources not found for scenario ${req.params.id}`, { statusCode: 404 });
+
+    return res.json(ressources);
+  },
+
+  async getItems(req, res) {
+    const items = await scenarioDatamapper.findItemsByScenarioPk(req.params.id);
+
+    if (items.length === 0) throw new ApiError(`No items found for scenario ${req.params.id}`, { statusCode: 404 });
+
+    return res.json(items);
+  },
+
+  async getHeros(req, res) {
+    const heros = await scenarioDatamapper.findHerosByScenarioPk(req.params.id);
+
+    if (heros.length === 0) throw new ApiError(`No heros found for scenario ${req.params.id}`, { statusCode: 404 });
+
+    return res.json(heros);
+  },
+
+  async getNpc(req, res) {
+    const npc = await scenarioDatamapper.findNpcByScenarioPk(req.params.id);
+
+    if (npc.length === 0) throw new ApiError(`No NPCs found for scenario ${req.params.id}`, { statusCode: 404 });
+
+    return res.json(npc);
+  },
+
 };

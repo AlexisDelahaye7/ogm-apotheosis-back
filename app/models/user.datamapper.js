@@ -84,12 +84,18 @@ export default {
     );
     return result.rows[0];
   },
-};
 
-/*
-findall
-findbyPK
-insert
-update
-delete
-*/
+  async findBookmarksByUserPk(id) {
+    const result = await client.query(
+      `
+      SELECT "bookmark".*,
+      "scenario"."name" AS "scenario_name"
+      FROM "bookmark"
+      JOIN "scenario" ON "scenario"."id" = "bookmark"."scenario_id"
+      WHERE "bookmark"."user_id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
+  },
+};

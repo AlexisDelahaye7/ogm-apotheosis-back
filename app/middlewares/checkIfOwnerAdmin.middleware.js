@@ -9,5 +9,5 @@ export default async function checkIfOwner(req, res, next) {
 
   // ! sinon, next(new ApiError('Unauthorized', { statusCode: 401 }));
 
-  next();
+  return next();
 }

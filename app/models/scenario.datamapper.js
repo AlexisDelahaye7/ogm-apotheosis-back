@@ -3,13 +3,19 @@ import client from '../config/client.db.js';
 export default {
 
   async findAll() {
-    const result = await client.query('SELECT * FROM "scenario"');
+    const result = await client.query(`
+      SELECT "scenario".*, "category"."name" AS "category_name" FROM "scenario"
+      JOIN "category" ON "category"."id" = "scenario"."category_id"
+    `);
     return result.rows;
   },
 
   async findByPk(id) {
     const result = await client.query(
-      'SELECT * FROM "scenario" WHERE id = $1',
+      `SELECT "scenario".*,
+      "category"."name" AS "category_name" FROM "scenario"
+      JOIN "category" ON "category"."id" = "scenario"."category_id"
+      WHERE "scenario"."id" = $1;`,
       [id],
     );
     return result.rows[0];
@@ -75,5 +81,83 @@ export default {
       [id],
     );
     return result.rows[0];
+  },
+
+  async findReviewsByScenarioPk(id) {
+    const result = await client.query(
+      `
+      SELECT "review".*,
+      "scenario"."name" AS "scenario_name",
+      "user"."username" AS "user_username"
+      FROM "review"
+      JOIN "scenario" ON "scenario"."id" = "review"."scenario_id"
+      JOIN "user" ON "user"."id" = "review"."user_id"
+      WHERE "scenario"."id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
+  },
+
+  async findRessourcesByScenarioPk(id) {
+    const result = await client.query(
+      `
+      SELECT "ressource".*,
+      "scenario"."name" AS "scenario_name"
+      FROM "ressource"
+      JOIN "scenario" ON "scenario"."id" = "ressource"."scenario_id"
+      WHERE "scenario"."id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
+  },
+
+  async findItemsByScenarioPk(id) {
+    const result = await client.query(
+      `
+      SELECT "item".*,
+      "asset"."name" AS "asset_name",
+      "scenario"."name" AS "scenario_name"
+      FROM "item"
+      JOIN "asset" ON "asset"."id" = "item"."asset_id"
+      JOIN "scenario" ON "scenario"."id" = "asset"."scenario_id"
+      WHERE "scenario"."id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
+  },
+
+  async findHerosByScenarioPk(id) {
+    const result = await client.query(
+      `
+      SELECT "hero".*,
+      "asset"."name" AS "asset_name",
+      "scenario"."name" AS "scenario_name"
+      FROM "hero"
+      JOIN "asset" ON "asset"."id" = "hero"."asset_id"
+      JOIN "scenario" ON "scenario"."id" = "asset"."scenario_id"
+      WHERE "scenario"."id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
+  },
+
+  async findNpcByScenarioPk(id) {
+    const result = await client.query(
+      `
+      SELECT "npc".*,
+      "asset"."name" AS "asset_name",
+      "scenario"."name" AS "scenario_name"
+      FROM "npc"
+      JOIN "asset" ON "asset"."id" = "npc"."asset_id"
+      JOIN "scenario" ON "scenario"."id" = "asset"."scenario_id"
+      WHERE "scenario"."id" = $1
+      `,
+      [id],
+    );
+    return result.rows;
   },
 };

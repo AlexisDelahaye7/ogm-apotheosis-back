@@ -11,6 +11,9 @@ const router = express.Router();
 
 router.all('/', (req, res) => { res.send('coucou'); });
 
+// #swagger.summary = "route d'accès à la doc de l'API"
+    // #swagger.description = "Affichage de toutes les routes"
+    //#swagger.tags = ['Swagger Docs']
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
