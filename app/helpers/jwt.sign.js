@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken';
  */
 
 export default function createJwt(userId) {
-  const token = jwt.sign({ id: userId }, process.env.PRIVATE_KEY);
+  const payload = { id: userId };
+  const expiresInInSeconds = 86400;
+  const token = jwt.sign(payload, process.env.PRIVATE_KEY, { expiresIn: expiresInInSeconds });
   return token;
 }

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { el } from '@faker-js/faker';
 import logger from './logger.js';
 
 /**
@@ -13,6 +14,10 @@ export default function verifyJwt(bearerToken) {
     const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
     return decoded;
   } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      logger.warn('Token expired', err);
+      return false;
+    }
     logger.error(err);
     return false;
   }
