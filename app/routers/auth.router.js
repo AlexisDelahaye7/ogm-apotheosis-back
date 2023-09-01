@@ -3,7 +3,7 @@ import authController from '../controllers/auth.controller.js';
 import getUserToken from '../middlewares/jwt.middleware.js';
 import validate from '../middlewares/validator.middleware.js';
 import registerSchema from '../validation/schemas/register.create.schema.js';
-import loginSchema from '../validation/schemas/login.post.schema.js';
+import loginSchema from '../validation/schemas/login.schema.js';
 import controllerHandler from '../middlewares/controller.middleware.js';
 
 const router = express.Router();
