@@ -1,4 +1,4 @@
-import ressourceDatamapper from '../datamappers/ressource.datamapper.js';
+import ressourceDatamapper from '../models/ressource.datamapper.js';
 import { ApiError } from '../middlewares/error.middleware.js';
 
 export default {
@@ -25,4 +25,24 @@ export default {
     return res.json(ressource);
   },
 
+  async updateOne(req, res) {
+    req.body.updated_at = new Date();
+    const ressource = await ressourceDatamapper.update(req.params.id, req.body);
+
+    if (!ressource) {
+      throw new ApiError('Ressource not found', { statusCode: 404 });
+    }
+
+    return res.json(ressource);
+  },
+
+  async deleteOne(req, res) {
+    const ressource = await ressourceDatamapper.delete(req.params.id);
+
+    if (!ressource) {
+      throw new ApiError('Ressource not found', { statusCode: 404 });
+    }
+
+    return res.json(ressource);
+  },
 };
