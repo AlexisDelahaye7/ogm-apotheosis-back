@@ -4,6 +4,7 @@ import scenarioRouter from './scenario.router.js';
 import authRouter from './auth.router.js';
 import userRouter from './user.router.js';
 import categoryRouter from './category.router.js';
+import ressourceRouter from './ressource.router.js';
 import swaggerDocument from '../../docs/swagger.json' assert { type: 'json' };
 
 import { errorHandler } from '../middlewares/error.middleware.js';
@@ -26,6 +27,7 @@ router.use('/user', userRouter);
 
 router.use('/category', categoryRouter);
 
+router.use('/ressource', ressourceRouter);
 
 router.use((req, res, next) => {
   res.status(404).json({ message: 'Not found' });
