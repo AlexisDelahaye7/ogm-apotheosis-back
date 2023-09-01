@@ -4,6 +4,7 @@ import getUserToken from '../middlewares/jwt.middleware.js';
 import controllerHandler from '../middlewares/controller.middleware.js';
 import createSchema from '../validation/schemas/ressource.create.schema.js';
 import updateSchema from '../validation/schemas/ressource.update.schema.js';
+import isAuthorAdmin from '../middlewares/ressource.checkIfAuthorAdmin.middleware.js';
 
 import validate from '../middlewares/validator.middleware.js';
 
@@ -14,8 +15,8 @@ router.route('/')
   .post(validate('body', createSchema), controllerHandler(ressourceController.createOne));
 
 router.route('/:id(\\d+)')
-  .get(ressourceController.getOne)
-  .patch(validate('body', updateSchema), getUserToken, isAdmin, controllerHandler(ressourceController.updateOne))
-  .delete(ressourceController.deleteOne);
+  .get(getUserToken, isAuthorAdmin, ressourceController.getOne)
+  .patch(validate('body', updateSchema), getUserToken, isAuthorAdmin, controllerHandler(ressourceController.updateOne))
+  .delete(getUserToken, isAuthorAdmin, ressourceController.deleteOne);
 
 export default router;
