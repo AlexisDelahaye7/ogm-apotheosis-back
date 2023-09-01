@@ -1,8 +1,8 @@
-import ressourceDatamapper from '../models/ressource.datamapper.js';
-import roleDatamapper from '../models/role.datamapper.js';
-import scenarioDatamapper from '../models/scenario.datamapper.js';
+import ressourceDatamapper from '../../models/ressource.datamapper.js';
+import roleDatamapper from '../../models/role.datamapper.js';
+import scenarioDatamapper from '../../models/scenario.datamapper.js';
 
-import { ApiError } from './error.middleware.js';
+import { ApiError } from '../error.middleware.js';
 
 export default async function checkIfAuthor(req, res, next) {
   try {

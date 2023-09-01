@@ -1,5 +1,5 @@
-import roleDatamapper from '../models/role.datamapper.js';
-import { ApiError } from './error.middleware.js';
+import roleDatamapper from '../../models/role.datamapper.js';
+import { ApiError } from '../error.middleware.js';
 
 export default async function checkIfOwner(req, res, next) {
   try {
