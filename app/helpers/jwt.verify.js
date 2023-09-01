@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { el } from '@faker-js/faker';
 import logger from './logger.js';
 
 /**
