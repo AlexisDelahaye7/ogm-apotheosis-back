@@ -4,7 +4,7 @@ import getUserToken from '../middlewares/jwt.middleware.js';
 import controllerHandler from '../middlewares/controller.middleware.js';
 import createSchema from '../validation/schemas/ressource.create.schema.js';
 import updateSchema from '../validation/schemas/ressource.update.schema.js';
-import isAuthorAdmin from '../middlewares/ressource.checkIfAuthorAdmin.middleware.js';
+import isAuthorAdmin from '../middlewares/auth/ressource.checkIfAuthorAdmin.middleware.js';
 
 import validate from '../middlewares/validator.middleware.js';
 
