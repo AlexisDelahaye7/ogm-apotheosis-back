@@ -27,4 +27,8 @@ router
   .route('/:id(\\d+)/bookmarks')
   .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getBookmarks));
 
+router
+  .route('/:id(\\d+)/scenarios')
+  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getUserScenarios));
+
 export default router;
