@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export default Joi.object({
-  username: Joi.string(),
-  email: Joi.string().email(),
-  password: Joi.string().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%*#?&]{8,}$/), // Minimum eight characters, at least one letter, one number and one special character
+  username: Joi.string().pattern(/^(?!.*\s)[a-zA-Z0-9-_]{5,25}$/i),
+  email: Joi.string().email().pattern(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i),
+  password: Joi.string().pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%#*?&])[^\s]{8,}$/), // Minimum eight characters, at least one letter, one number and one special character
 });
