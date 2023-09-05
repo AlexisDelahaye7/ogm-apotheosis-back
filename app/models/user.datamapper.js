@@ -101,14 +101,14 @@ export default {
 
   async findScenariosByUserPk(id) {
     const result = await client.query(
-    `
+      `
     SELECT "scenario".*,
     "user"."username" AS "user_username"
     FROM "scenario"
     JOIN "user" ON "user"."id" = "scenario"."author_id"
     WHERE "scenario"."author_id" = $1
     `,
-    [id],
+      [id],
     );
     return result.rows;
   },

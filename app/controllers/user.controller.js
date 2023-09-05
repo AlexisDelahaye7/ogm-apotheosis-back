@@ -92,7 +92,7 @@ export default {
 
   async getUserScenarios(req, res) {
     const userScenarios = await userDatamapper.findScenariosByUserPk(req.params.id);
-    if(!userScenarios) { throw new ApiError('User not found', { statusCode: 404 }); }
+    if (!userScenarios) { throw new ApiError('User not found', { statusCode: 404 }); }
     return res.json(userScenarios);
   },
 };
