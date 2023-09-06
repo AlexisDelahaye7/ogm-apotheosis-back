@@ -6,6 +6,7 @@ export default {
     const result = await client.query(`
       SELECT "scenario".*, "category"."name" AS "category_name" FROM "scenario"
       JOIN "category" ON "category"."id" = "scenario"."category_id"
+      ORDER BY "scenario"."id" ASC;
     `);
     return result.rows;
   },
