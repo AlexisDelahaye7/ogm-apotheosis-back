@@ -10,13 +10,13 @@ import validate from '../middlewares/validator.middleware.js';
 
 const router = express.Router();
 
-router.route('/')
-  .get(ressourceController.getAll)
-  .post(validate('body', createSchema), controllerHandler(ressourceController.createOne));
-
 router.route('/:id(\\d+)')
   .get(getUserToken, isAuthorAdmin, ressourceController.getOne)
   .patch(validate('body', updateSchema), getUserToken, isAuthorAdmin, controllerHandler(ressourceController.updateOne))
   .delete(getUserToken, isAuthorAdmin, ressourceController.deleteOne);
+
+router.route('/')
+  .get(ressourceController.getAll)
+  .post(validate('body', createSchema), controllerHandler(ressourceController.createOne));
 
 export default router;

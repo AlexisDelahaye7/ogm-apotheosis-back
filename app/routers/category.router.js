@@ -9,13 +9,13 @@ import updateSchema from '../validation/schemas/category.update.schema.js';
 
 const router = express.Router();
 
-router.route('/')
-  .get(controllerHandler(categoryController.getAll))
-  .post(validate('body', createSchema), controllerHandler(categoryController.createOne));
-
 router.route('/:id(\\d+)')
   .get(controllerHandler(categoryController.getOne))
   .patch(validate('body', updateSchema), getUserToken, isAdmin, controllerHandler(categoryController.updateOne))
   .delete(controllerHandler(categoryController.deleteOne));
+
+router.route('/')
+  .get(controllerHandler(categoryController.getAll))
+  .post(validate('body', createSchema), controllerHandler(categoryController.createOne));
 
 export default router;

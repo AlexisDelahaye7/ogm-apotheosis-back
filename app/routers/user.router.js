@@ -10,18 +10,8 @@ import controllerHandler from '../middlewares/controller.middleware.js';
 const router = express.Router();
 
 router
-  .route('/:id(\\d+)')
-  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getOne))
-  .patch(validate('body', updateSchema), getUserToken, checkIfOwnerAdmin, controllerHandler(userController.updateOne))
-  .delete(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.deleteOne));
-
-router
   .route('/:id(\\d+)/authLevel')
   .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getAuthLevel));
-
-router
-  .route('/')
-  .get(getUserToken, checkIfAdmin, controllerHandler(userController.getAll));
 
 router
   .route('/:id(\\d+)/bookmarks')
@@ -30,5 +20,15 @@ router
 router
   .route('/:id(\\d+)/scenarios')
   .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getUserScenarios));
+
+router
+  .route('/:id(\\d+)')
+  .get(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.getOne))
+  .patch(validate('body', updateSchema), getUserToken, checkIfOwnerAdmin, controllerHandler(userController.updateOne))
+  .delete(getUserToken, checkIfOwnerAdmin, controllerHandler(userController.deleteOne));
+
+router
+  .route('/')
+  .get(getUserToken, checkIfAdmin, controllerHandler(userController.getAll));
 
 export default router;
