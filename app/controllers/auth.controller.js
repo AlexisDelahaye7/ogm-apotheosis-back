@@ -49,11 +49,13 @@ export default {
       role_id: 1,
     });
 
+    const token = createJwt(user.id);
+
     const returnedUser = {
       id: user.id,
       username: user.username,
       email: user.email,
-      token: createJwt(user.id),
+      token,
     };
 
     return res.status(201).json(returnedUser);
