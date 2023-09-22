@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=ogm
+
+initDB 2023-08-22T08:42:53Z oresto <alexis.delahaye7@gmail.com> # database initialization
+onDeleteCascade 2023-08-28T12:31:13Z Kevin Bournique <kevin.bournique@gmail.com> # permet de ne pas violer les clés étrangères

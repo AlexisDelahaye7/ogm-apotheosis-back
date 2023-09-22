@@ -1,0 +1,218 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "titre": "Mon API",
+    "description": "Description",
+    "version": "1.0.0",
+    "title": "REST API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/current": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getOne)}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,getUserToken,checkIfAuthorAdmin,controllerHandler(scenarioController.{_{__function__}_}deleteOne));}": {
+      "delete": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,validate(body,updateSchema),controllerHandler(scenarioController.updateOne)}": {
+      "patch": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getReviews));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getRessources));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getItems));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getHeros));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/scenario/{id(\\\\d+,controllerHandler(scenarioController.{_{__function__}_}getNpc));exportdefaultrouter;}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,getUserToken,checkIfOwnerAdmin,controllerHandler(userController.{_{__function__}_}getOne)}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,getUserToken,checkIfOwnerAdmin,controllerHandler(userController.{_{__function__}_}deleteOne));}": {
+      "delete": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,validate(body,updateSchema),getUserToken,checkIfOwnerAdmin,controllerHandler(userController.updateOne)}": {
+      "patch": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,getUserToken,checkIfOwnerAdmin,controllerHandler(userController.{_{__function__}_}getAuthLevel));}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/{id(\\\\d+,getUserToken,checkIfOwnerAdmin,controllerHandler(userController.{_{__function__}_}getBookmarks));exportdefaultrouter;}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "hôte": "localhost:3000",
+  "schémas": [
+    "http"
+  ]
+}
