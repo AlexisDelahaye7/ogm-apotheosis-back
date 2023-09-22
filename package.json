@@ -7,7 +7,8 @@
   "scripts": {
     "start": "NODE_ENV=production node .",
     "dev": "npx nodemon",
-    "db:deploy": "sqitch revert -y; sqitch deploy; node ./data/seeding.js",
+    "db:deploy": "sqitch deploy;",
+    "db:seed" : "node ./data/seeding.js",
     "db:reset": "sqitch revert -y; npm run db:deploy;",
     "start-gendoc": "node docs/swagger.js"
   },
