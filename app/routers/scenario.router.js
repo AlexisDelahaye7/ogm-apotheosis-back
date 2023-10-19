@@ -38,7 +38,7 @@ router.route('/:id(\\d+)')
    * @param {Object} scenario.body.required - scenario data
    */
   .get(controllerHandler(scenarioController.getOne))
-  .patch(validate('body', updateSchema), controllerHandler(scenarioController.updateOne))
+  .patch(getUserToken, checkIfAuthorAdmin, validate('body', updateSchema), controllerHandler(scenarioController.updateOne))
   .delete(getUserToken, checkIfAuthorAdmin, controllerHandler(scenarioController.deleteOne));
 
 router.route('/')
